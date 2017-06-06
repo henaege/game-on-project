@@ -1,0 +1,23 @@
+html
+	head
+		title GAME ON
+		link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous")
+		link(rel="stylesheet", type="text/css", href="stylesheets/style.css")
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+	body
+
+	body
+		div#bgndVideo.player(data-property="{videoURL:'http://youtu.be/dOZxIpy6Gm4',containment:'body',autoPlay:true, mute:true, startAt:0, opacity:1}")
+
+		h1 GAME ON
+
+		div.main-content-wrapper.container
+			div.row
+				div.col-sm-2.col-sm-offset-10.log-in-container
+					button.log-in
+			div.row
+				div.col-sm-12.text-center
+		script(src="javascripts/script.js" type="text/javascript").
+			$(function(){
+				$("#bgndVideo").YTPlayer();
+			});
