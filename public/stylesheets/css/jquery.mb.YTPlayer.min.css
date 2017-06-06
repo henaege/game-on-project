@@ -5,9 +5,9 @@ h1{
     text-align: center;
     color: white;
     margin-top: 340px;
-    font-size: 40px;  
-    border: 2px solid black;
-    border-radius: 40%;  
+    font-size: 80px;  
+    /* border: 2px solid black;
+    border-radius: 40%;   */
 }
 
 h3{
@@ -17,4 +17,16 @@ h3{
     color: #fac51c;
 }
 
+.log-in{
+    font-size: 20px;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    /* opacity: 1.0; */
+}
+
+/* .log-in:hover{ */
+    /* opacity: 0.5; */
+    /* filter: alpha opacity=50; */
+/* } */
 
