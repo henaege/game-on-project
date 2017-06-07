@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.18)
 # Database: game-on
-# Generation Time: 2017-06-07 18:37:52 +0000
+# Generation Time: 2017-06-07 19:04:17 +0000
 # ************************************************************
 
 
@@ -557,7 +557,9 @@ VALUES
 	(514,2.6,0.6,0.1,1.8,7.71333,0),
 	(515,0.7,0.1,0.1,1.1,3.475,0),
 	(516,4.4,0.7,0.3,2.3,15.335,0.6),
-	(517,6,0.6,0.3,3.4,12.865,0);
+	(517,6,0.6,0.3,3.4,12.865,0),
+	(518,31.2,11,2,13.6,37.17,4),
+	(519,7.3,1.6,0.5,3,17,0.7);
 
 /*!40000 ALTER TABLE `per_game` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1098,7 +1100,9 @@ VALUES
 	(514,'Tyler','Zeller','Celtics','C'),
 	(515,'Stephen','Zimmerman','Magic','C'),
 	(516,'Paul','Zipser','Bulls','F'),
-	(517,'Ivica','Zubac','Lakers','C');
+	(517,'Ivica','Zubac','Lakers','C'),
+	(518,'MAX','MAX','MAX','MAX'),
+	(519,'AVG','AVG','AVG','AVG');
 
 /*!40000 ALTER TABLE `player_info` ENABLE KEYS */;
 UNLOCK TABLES;
