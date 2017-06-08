@@ -1,11 +1,33 @@
 var express = require('express');
 var router = express.Router();
-var btoa = require('btoa');
 var mysql = require('mysql');
+var btoa = require('btoa');
 var serverInfo = require('../config/config');
+/* GET home page. */
+// router.get('/', function(req, res, next) {
+//   res.render('index', { });
+// });
+router.get('/user', function(req, res, next){
+  var array = [];
+  var coo = 'coo';
+  var playerName = req.body.search;
+  var selectQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
+  connection.query(selectQuery, (error, results)=>{
+    if(error) throw error;
+    for (let i = 0; i < results.length; i++){
+      array.push(results[i].full_name);
+    }
+    // console.log(array);
+    res.render('user-page', {playersFullName: array});
+  });
+  // res.render('user-page', { });
+});
+
+
 // var APIdata;
 /* GET home page. */
 router.get('/', function(req, res, next) {
+
   // APIdata = JSON.parse(APIdata);
   // console.log(APIdata);
   // =======================Getting player Stats from the API database======================
@@ -106,6 +128,31 @@ var connection = mysql.createConnection({
     database: serverInfo.database
 });
 connection.connect();
+router.post('/user', (req, res)=>{
+  var fullName = req.body.search;
+  var nameArray = req.body.search.split(' ');
+  var playerId;
+  var idQuery = `SELECT id FROM player_info WHERE first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}';`;
+  connection.query(idQuery,(error, results)=> {
+    if (error) throw error;
+    playerId = results[0].id;
+    // console.log(typeof(playerId));
+    var selectQuery = `SELECT photo, team, position FROM player_info WHERE id = ${playerId};`
+    connection.query(selectQuery, (error, results)=>{
+      if(error) throw error;
+      var photoUrl = results[0].photo;
+      var teamName = results[0].team;
+      var position = results[0].position;
+      res.render('user-page', {
+          photoUrl: photoUrl, 
+          teamName: teamName, 
+          position: position,
+          fullName: fullName
+        });
+    });
+  });
 
+
+});
 
 module.exports = router;
