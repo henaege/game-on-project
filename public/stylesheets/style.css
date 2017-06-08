@@ -12,7 +12,7 @@ h1{
     font-family: 'Squada One', sans-serif;    
    text-align: center;
     color: white;
-    padding-top: 360px;
+    padding-top: 330px;
     font-size: 80px;  
    text-shadow: 2px 3px black;
 }
@@ -36,6 +36,10 @@ h3{
 
 .log-in:hover{
     opacity: 0.5;
+}
+
+#start-btn:focus{
+  outline: none; 
 }
 
 .begin-container{
