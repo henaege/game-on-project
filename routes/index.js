@@ -6,44 +6,44 @@ var serverInfo = require('../config/config');
 // var APIdata;
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	// APIdata = JSON.parse(APIdata);
-	// console.log(APIdata);
-	// =======================Getting player Stats from the API database======================
-		// var players = APIdata.cumulativeplayerstats.playerstatsentry;
-		// // res.json(players);
+  // APIdata = JSON.parse(APIdata);
+  // console.log(APIdata);
+  // =======================Getting player Stats from the API database======================
+    // var players = APIdata.cumulativeplayerstats.playerstatsentry;
+    // // res.json(players);
 
-		// // console.log(players[0].stats.PtsPerGame['#text']);
-		// for(let i = 0; i < players.length; i++){
-  //   		var points = parseFloat(players[i].stats.PtsPerGame['#text']);
-  //   		var assists = parseFloat(players[i].stats.AstPerGame['#text']);
-  //   		var steals = parseFloat(players[i].stats.StlPerGame['#text']);
-  //   		var rebounds = parseFloat(players[i].stats.RebPerGame['#text']);
-  //   		var minutes = parseFloat(players[i].stats.MinSecondsPerGame['#text']) / 60;
-  //   		var threePoints = parseFloat(players[i].stats.Fg3PtMadePerGame['#text']);
-  //   		var insertQuery = `INSERT INTO per_game (total_points, assists, steals, rebounds, minutes, three_points) VALUES ('${points}', '${assists}', '${steals}', '${rebounds}', '${minutes}', '${threePoints}');`;
-  //   		connection.query(insertQuery, (error, results)=>{
-  //   			if(error) throw error;
-  //   		});
-  //   	}
+    // // console.log(players[0].stats.PtsPerGame['#text']);
+    // for(let i = 0; i < players.length; i++){
+  //      var points = parseFloat(players[i].stats.PtsPerGame['#text']);
+  //      var assists = parseFloat(players[i].stats.AstPerGame['#text']);
+  //      var steals = parseFloat(players[i].stats.StlPerGame['#text']);
+  //      var rebounds = parseFloat(players[i].stats.RebPerGame['#text']);
+  //      var minutes = parseFloat(players[i].stats.MinSecondsPerGame['#text']) / 60;
+  //      var threePoints = parseFloat(players[i].stats.Fg3PtMadePerGame['#text']);
+  //      var insertQuery = `INSERT INTO per_game (total_points, assists, steals, rebounds, minutes, three_points) VALUES ('${points}', '${assists}', '${steals}', '${rebounds}', '${minutes}', '${threePoints}');`;
+  //      connection.query(insertQuery, (error, results)=>{
+  //        if(error) throw error;
+  //      });
+  //    }
 
-	// ===================Getting player information from the API database ===============
-	// var players = APIdata.cumulativeplayerstats.playerstatsentry;
-	// console.log(players[0]);
-	// for(let i = 0; i < players.length; i++){
- //    	var first_name = players[i].player.FirstName.match(/[a-zA-z]+/);
- //    	var last_name = players[i].player.LastName.match(/[a-zA-z]+/);
- //    	var team = players[i].team.Name;
- //    	var position = players[i].player.Position;
- //    	var insertQuery = `INSERT INTO player_info (first_name, last_name, team, position) VALUES ('${first_name}', '${last_name}', '${team}', '${position}');`;
- //    	connection.query(insertQuery, (error, results)=>{
- //    		if(error) throw error;
- //    	});
+  // ===================Getting player information from the API database ===============
+  // var players = APIdata.cumulativeplayerstats.playerstatsentry;
+  // console.log(players[0]);
+  // for(let i = 0; i < players.length; i++){
+ //     var first_name = players[i].player.FirstName.match(/[a-zA-z]+/);
+ //     var last_name = players[i].player.LastName.match(/[a-zA-z]+/);
+ //     var team = players[i].team.Name;
+ //     var position = players[i].player.Position;
+ //     var insertQuery = `INSERT INTO player_info (first_name, last_name, team, position) VALUES ('${first_name}', '${last_name}', '${team}', '${position}');`;
+ //     connection.query(insertQuery, (error, results)=>{
+ //       if(error) throw error;
+ //     });
  //    }
    // =============================End of for loop===========================================
 
-	// for(let i = 0; i < APIdata.playerstatsentry.length; i++){
-		// res.render('test', {data: APIdata.cumulativeplayerstats.playerstatsentry[1].player.LastName});
-	
+  // for(let i = 0; i < APIdata.playerstatsentry.length; i++){
+    // res.render('test', {data: APIdata.cumulativeplayerstats.playerstatsentry[1].player.LastName});
+  
   // res.render('index', { title: 'Express' });
 });
 
