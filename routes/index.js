@@ -44,7 +44,7 @@ router.get('/', function(req, res, next) {
   // for(let i = 0; i < APIdata.playerstatsentry.length; i++){
     // res.render('test', {data: APIdata.cumulativeplayerstats.playerstatsentry[1].player.LastName});
   
-  // res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express' });
 });
 
 
