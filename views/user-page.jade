@@ -6,6 +6,27 @@ html
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js")
 		script(type='text/javascript' src='/javascripts/script.js')
 	body
-		div.main-content-contianer
-		div.nav-bar
-		div.
+		div.main-content-container.container
+			div.row
+				div.nav-bar-container
+					div.col-sm-12.nav-bar
+						h3 Nav Bar
+			div.row
+				div.option-panel-container.col-sm-3
+					div.option-panel 
+						h3 Search
+						div.search-bar
+							input(type="text", placeholder="Search")
+							button(type="submit") Submit
+						div.pic
+							p picture
+						div.info
+							p table
+							table
+
+				div.charts-container.col-sm-7
+					div.charts 
+						h3 Charts
+				div.news-container.col-sm-2
+					div.news
+						h3 News
