@@ -20,9 +20,8 @@ $(document).ready(function(){
       }
     });
 
-    $(function () { 
-    
-var myChart = Highcharts.chart('.charts', {
+	
+Highcharts.chart('charts', {
 
     chart: {
         polar: true,
@@ -39,16 +38,16 @@ var myChart = Highcharts.chart('.charts', {
     },
 
     xAxis: {
-        categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
-                'Information Technology', 'Administration'],
+        categories: ['Points/Game', 'Assists/Game', '3 Point Made/Game', 'Rebounds/Game',
+                'Steals/Game', 'Minutes/Game'],
         tickmarkPlacement: 'on',
-        lineWidth: 0
+        lineWidth: 0,
     },
 
     yAxis: {
         gridLineInterpolation: 'polygon',
         lineWidth: 0,
-        min: 0
+        min: 0,
     },
 
     tooltip: {
@@ -64,16 +63,15 @@ var myChart = Highcharts.chart('.charts', {
     },
 
     series: [{
-        name: 'Allocated Budget',
-        data: [43000, 19000, 60000, 35000, 17000, 10000],
+        name: 'Stephen Curry',
+        data: [24.4, 6.4, 0.4, 4.3, 1.8, 32.2],
         pointPlacement: 'on'
     }, {
-        name: 'Actual Spending',
-        data: [50000, 39000, 42000, 31000, 26000, 14000],
+        name: 'Average',
+        data: [7.3, 1.6, 0.7, 3, 0.5, 17],
         pointPlacement: 'on'
     }]
 
-});
 });
 
 });
