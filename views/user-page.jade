@@ -2,8 +2,12 @@ html
 	head
 		title Game On
 		link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+		link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
 		link(rel="stylesheet" href="/stylesheets/style.css" type="text/css")
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js")
+		script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+		script.
+			var availableTags = '#{playersFullName}';
 		script(type='text/javascript' src='/javascripts/script.js')
 	body
 		div.main-content-container.container
@@ -16,7 +20,8 @@ html
 					div.option-panel 
 						h3 Search
 						div.search-bar
-							input(type="text", placeholder="Search")
+							form.form-group(action="/findPlayer" method="post")
+								input#search-input(type="text", placeholder="Search", name="search")
 							button(type="submit") Submit
 						div.pic
 							p picture

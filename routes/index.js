@@ -2,18 +2,30 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { });
-});
+// router.get('/', function(req, res, next) {
+//   res.render('index', { });
+// });
 router.get('/user', function(req, res, next) {
-  res.render('user-page', { });
+    var playerName = req.body.search;
+  var selectQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
+  connection.query(selectQuery, (error, results)=>{
+    if(error) throw error;
+    for (let i = 0; i < results.length; i++){
+      array.push(results[i].full_name);
+    }
+
+    res.render('user-page', {playersFullName: array});
+  });
+  // res.render('user-page', { });
 });
 var btoa = require('btoa');
 var mysql = require('mysql');
 var serverInfo = require('../config/config');
+var array = []
 // var APIdata;
 /* GET home page. */
 router.get('/', function(req, res, next) {
+
   // APIdata = JSON.parse(APIdata);
   // console.log(APIdata);
   // =======================Getting player Stats from the API database======================
@@ -114,7 +126,8 @@ var connection = mysql.createConnection({
     database: serverInfo.database
 });
 connection.connect();
+router.post('/findPlayer', (req, res)=>{
 
+});
 
 module.exports = router;
-
