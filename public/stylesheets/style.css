@@ -6,3 +6,50 @@ body {
 a {
   color: #00B7FF;
 }
+
+
+h1{
+    font-family: 'Squada One', sans-serif;    
+   text-align: center;
+    color: white;
+    padding-top: 360px;
+    font-size: 80px;  
+   text-shadow: 2px 3px black;
+}
+
+h3{
+    font-family: 'Ubuntu Condensed', sans-serif;
+    text-align: center;
+    font-size: 25px;
+    color: #fac51c ;
+}
+
+.log-in{
+    font-size: 20px;
+    color: #1058b7 ;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    float: right;
+    margin-bottom: 5px;
+}
+
+.log-in:hover{
+    opacity: 0.5;
+}
+
+.begin-container{
+    text-align: center;
+    height: 60px;
+
+}
+
+.form-container{
+	text-align: center;
+}
+.second-section{
+	display: none;
+}
+.first-section{
+	transition: all;
+}
