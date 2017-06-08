@@ -6,8 +6,8 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: 127.0.0.1 (MySQL 5.7.18)
-# Database: testt
-# Generation Time: 2017-06-08 13:02:28 +0000
+# Database: game_on
+# Generation Time: 2017-06-08 17:23:50 +0000
 # ************************************************************
 
 
