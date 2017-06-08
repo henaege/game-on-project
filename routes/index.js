@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var btoa = require('btoa');
+var bcrypt = require('bcrypt-nodejs');
 var serverInfo = require('../config/config');
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -17,7 +18,7 @@ router.get('/user', function(req, res, next){
       array.push(results[i].full_name);
     }
     // console.log(array);
-    res.render('user-page', {playersFullName: array});
+    res.render('user-page', {playersFullName: array, sessionInfo: req.session});
   });
   // res.render('user-page', { });
 });
@@ -64,27 +65,28 @@ router.get('/', function(req, res, next) {
 
   // for(let i = 0; i < APIdata.playerstatsentry.length; i++){
     // res.render('test', {data: APIdata.cumulativeplayerstats.playerstatsentry[1].player.LastName});
-  
-  var array = [];
-  var playerName = req.body.search;
-  var selectQuery = "SELECT id FROM per_game ORDER BY three_points ASC;";
-  connection.query(selectQuery, (error, results)=>{
-    if(error) throw error;
-    for (let i = 0; i < results.length; i++){
-      array.push(results[i].id);
-    }
-    console.log(array);
-    for (let j = 0; j < array.length; j++){
-      var rank = j + 1;
-      var insertQuery = `UPDATE per_game SET THREErank = ${rank} WHERE id = ${parseInt(array[j])};`;
-      connection.query(insertQuery, (error, results)=>{
-      if (error) throw error;
+  // =============================== Getting rank for each per_game data =========================
+  // var array = [];
+  // var playerName = req.body.search;
+  // var selectQuery = "SELECT id FROM per_game ORDER BY three_points ASC;";
+  // connection.query(selectQuery, (error, results)=>{
+  //   if(error) throw error;
+  //   for (let i = 0; i < results.length; i++){
+  //     array.push(results[i].id);
+  //   }
+  //   console.log(array);
+  //   for (let j = 0; j < array.length; j++){
+  //     var rank = j + 1;
+  //     var insertQuery = `UPDATE per_game SET THREErank = ${rank} WHERE id = ${parseInt(array[j])};`;
+  //     connection.query(insertQuery, (error, results)=>{
+  //     if (error) throw error;
 
-    });
-    }
-
+  //   });
+  //   }
+// });
+   // ====================================END ======================================================
     res.render('index', {});
-  });
+
 
 });
 
@@ -170,8 +172,27 @@ router.post('/user', (req, res)=>{
         });
     });
   });
-
-
 });
+
+  router.post("/signUp", (req, res)=>{
+    var username = req.body.username;
+    var password = req.body.password;
+    var hash = bcrypt.hashSync(password);
+    var selectQuery = "SELECT * FROM users WHERE username = ?;";
+    connection.query(selectQuery, [username], (error, results)=> {
+      if (results.length == 0){
+        console.log(username);
+        var insertQuery = "INSERT INTO users(username, password) VALUES(?,?);";
+        connection.query(insertQuery, [username, hash], (error, results)=> {
+          if(error) throw error;
+          req.session.username = username;
+          req.session.loggedin = true;
+          res.redirect('/user?msg=registered');
+        });
+      } else {
+        res.redirect('/?msg=existingUser')
+      }
+    })
+  });
 
 module.exports = router;

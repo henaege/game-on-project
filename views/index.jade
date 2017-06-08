@@ -32,14 +32,14 @@ html
 			div.second-section.container
 				div.row
 					div.form-container.col-sm-12
-						form.sign-up
+						form.sign-up(action="/signUp" method="post")
 							div.form-group
-								label(for='username') User Name
-								input.form-control(type='text' placeholder='User Name')
+								label User Name
+								input.form-control(type='text' placeholder='User Name' name="username")
 							div.form-group
-								label(for='password') Password
-								input.form-control(type='password' placeholder='Password')
-						button.btn.btn-success(type='submit') Submit
+								label Password
+								input.form-control(type='password' placeholder='Password' name="password")
+							button.btn.btn-success(type='submit') Submit
 
 
 
