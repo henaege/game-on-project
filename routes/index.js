@@ -1,50 +1,72 @@
 var express = require('express');
 var router = express.Router();
-var btoa = require('btoa');
 var mysql = require('mysql');
+var btoa = require('btoa');
 var serverInfo = require('../config/config');
+/* GET home page. */
+// router.get('/', function(req, res, next) {
+//   res.render('index', { });
+// });
+router.get('/user', function(req, res, next){
+  var array = [];
+  var coo = 'coo';
+  var playerName = req.body.search;
+  var selectQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
+  connection.query(selectQuery, (error, results)=>{
+    if(error) throw error;
+    for (let i = 0; i < results.length; i++){
+      array.push(results[i].full_name);
+    }
+    // console.log(array);
+    res.render('user-page', {playersFullName: array});
+  });
+  // res.render('user-page', { });
+});
+
+
 // var APIdata;
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	// APIdata = JSON.parse(APIdata);
-	// console.log(APIdata);
-	// =======================Getting player Stats from the API database======================
-		// var players = APIdata.cumulativeplayerstats.playerstatsentry;
-		// // res.json(players);
 
-		// // console.log(players[0].stats.PtsPerGame['#text']);
-		// for(let i = 0; i < players.length; i++){
-  //   		var points = parseFloat(players[i].stats.PtsPerGame['#text']);
-  //   		var assists = parseFloat(players[i].stats.AstPerGame['#text']);
-  //   		var steals = parseFloat(players[i].stats.StlPerGame['#text']);
-  //   		var rebounds = parseFloat(players[i].stats.RebPerGame['#text']);
-  //   		var minutes = parseFloat(players[i].stats.MinSecondsPerGame['#text']) / 60;
-  //   		var threePoints = parseFloat(players[i].stats.Fg3PtMadePerGame['#text']);
-  //   		var insertQuery = `INSERT INTO per_game (total_points, assists, steals, rebounds, minutes, three_points) VALUES ('${points}', '${assists}', '${steals}', '${rebounds}', '${minutes}', '${threePoints}');`;
-  //   		connection.query(insertQuery, (error, results)=>{
-  //   			if(error) throw error;
-  //   		});
-  //   	}
+  // APIdata = JSON.parse(APIdata);
+  // console.log(APIdata);
+  // =======================Getting player Stats from the API database======================
+    // var players = APIdata.cumulativeplayerstats.playerstatsentry;
+    // // res.json(players);
 
-	// ===================Getting player information from the API database ===============
-	// var players = APIdata.cumulativeplayerstats.playerstatsentry;
-	// console.log(players[0]);
-	// for(let i = 0; i < players.length; i++){
- //    	var first_name = players[i].player.FirstName.match(/[a-zA-z]+/);
- //    	var last_name = players[i].player.LastName.match(/[a-zA-z]+/);
- //    	var team = players[i].team.Name;
- //    	var position = players[i].player.Position;
- //    	var insertQuery = `INSERT INTO player_info (first_name, last_name, team, position) VALUES ('${first_name}', '${last_name}', '${team}', '${position}');`;
- //    	connection.query(insertQuery, (error, results)=>{
- //    		if(error) throw error;
- //    	});
+    // // console.log(players[0].stats.PtsPerGame['#text']);
+    // for(let i = 0; i < players.length; i++){
+  //      var points = parseFloat(players[i].stats.PtsPerGame['#text']);
+  //      var assists = parseFloat(players[i].stats.AstPerGame['#text']);
+  //      var steals = parseFloat(players[i].stats.StlPerGame['#text']);
+  //      var rebounds = parseFloat(players[i].stats.RebPerGame['#text']);
+  //      var minutes = parseFloat(players[i].stats.MinSecondsPerGame['#text']) / 60;
+  //      var threePoints = parseFloat(players[i].stats.Fg3PtMadePerGame['#text']);
+  //      var insertQuery = `INSERT INTO per_game (total_points, assists, steals, rebounds, minutes, three_points) VALUES ('${points}', '${assists}', '${steals}', '${rebounds}', '${minutes}', '${threePoints}');`;
+  //      connection.query(insertQuery, (error, results)=>{
+  //        if(error) throw error;
+  //      });
+  //    }
+
+  // ===================Getting player information from the API database ===============
+  // var players = APIdata.cumulativeplayerstats.playerstatsentry;
+  // console.log(players[0]);
+  // for(let i = 0; i < players.length; i++){
+ //     var first_name = players[i].player.FirstName.match(/[a-zA-z]+/);
+ //     var last_name = players[i].player.LastName.match(/[a-zA-z]+/);
+ //     var team = players[i].team.Name;
+ //     var position = players[i].player.Position;
+ //     var insertQuery = `INSERT INTO player_info (first_name, last_name, team, position) VALUES ('${first_name}', '${last_name}', '${team}', '${position}');`;
+ //     connection.query(insertQuery, (error, results)=>{
+ //       if(error) throw error;
+ //     });
  //    }
    // =============================End of for loop===========================================
 
-	// for(let i = 0; i < APIdata.playerstatsentry.length; i++){
-		// res.render('test', {data: APIdata.cumulativeplayerstats.playerstatsentry[1].player.LastName});
-	
-  // res.render('index', { title: 'Express' });
+  // for(let i = 0; i < APIdata.playerstatsentry.length; i++){
+    // res.render('test', {data: APIdata.cumulativeplayerstats.playerstatsentry[1].player.LastName});
+  
+  res.render('index', { title: 'Express' });
 });
 
 
@@ -106,6 +128,31 @@ var connection = mysql.createConnection({
     database: serverInfo.database
 });
 connection.connect();
+router.post('/user', (req, res)=>{
+  var fullName = req.body.search;
+  var nameArray = req.body.search.split(' ');
+  var playerId;
+  var idQuery = `SELECT id FROM player_info WHERE first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}';`;
+  connection.query(idQuery,(error, results)=> {
+    if (error) throw error;
+    playerId = results[0].id;
+    // console.log(typeof(playerId));
+    var selectQuery = `SELECT photo, team, position FROM player_info WHERE id = ${playerId};`
+    connection.query(selectQuery, (error, results)=>{
+      if(error) throw error;
+      var photoUrl = results[0].photo;
+      var teamName = results[0].team;
+      var position = results[0].position;
+      res.render('user-page', {
+          photoUrl: photoUrl, 
+          teamName: teamName, 
+          position: position,
+          fullName: fullName
+        });
+    });
+  });
 
+
+});
 
 module.exports = router;
