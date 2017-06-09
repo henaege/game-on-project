@@ -11,7 +11,7 @@ $(document).ready(function(){
 	nameSource = nameSource.slice(0, -2);
 	// console.log(nameSource);
     $( "#search-input" ).autocomplete({
-    	minLength: 3,
+    	minLength: 2,
       source: function( request, response ) {
           var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
           response( $.grep( nameSource, function( item ){

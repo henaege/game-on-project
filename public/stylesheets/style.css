@@ -53,7 +53,17 @@ h3{
 
 .form-container{
 	text-align: center;
+  margin-top: 100px;
 }
+
+.form-group {
+  margin: 15px;
+}
+
+label {
+  margin-right: 15px;
+}
+
 .second-section{
 	display: none;
 }

@@ -85,7 +85,7 @@ router.get('/', function(req, res, next) {
   //   }
 // });
    // ====================================END ======================================================
-    res.render('index', {});
+    res.render('index', {sessionInfo: req.session});
 
 
 });
@@ -168,7 +168,8 @@ router.post('/user', (req, res)=>{
           photoUrl: photoUrl, 
           teamName: teamName, 
           position: position,
-          fullName: fullName
+          fullName: fullName,
+          sessionInfo: req.session
         });
     });
   });
