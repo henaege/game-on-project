@@ -7,6 +7,7 @@ html
 		link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
 		link(rel="stylesheet" href="/stylesheets/style.css" type="text/css")
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous")
 		script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
 		script(src="https://code.highcharts.com/highcharts-more.js")
 		script(src="https://code.highcharts.com/modules/exporting.js")
@@ -25,14 +26,29 @@ html
 				var THREErank = "#{THREErank}";
 				console.log(PPGrank);
 			}
+			var registered = "#{sessionInfo.registered}";
+			console.log(registered)
 			
 		script(type='text/javascript' src='/javascripts/script.js')
 	body
 		div.main-content-container.container
+			div.modal.fade#accountSetting(tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel")
+				div.modal-dialog(role="document")
+					div.modal-content
+						div.modal-header
+							button.close(type="button" data-dismiss="modal" aria-label="Close")
+							h4.modal-title#gridSystemModalLabel Modal title
+						div.modal-body
+						div.modal-footer
+							button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+							button.btn.btn-primary(type="submit") Save changes
+
 			div.row
 				div.nav-bar-container
 					div.col-sm-12.nav-bar
+						button.btn.btn-success(type="button"  data-toggle="modal" data-target="#accountSetting" ) Setting
 						h3 Nav Bar
+
 			div.row
 				div.option-panel-container.col-sm-3
 					div.option-panel 

@@ -1,13 +1,26 @@
 $(document).ready(function(){
 	$('#start-btn').click(()=>{
 		function complete(){
-		// $('.second-section').css('visibility','visible');
-		$('.second-section').fadeIn(1000);			
+		$('.second-section').fadeIn(1000);
+		$('.login-form-container').css('display','none');			
 		}
 		$('.first-section').fadeOut(1000,complete);					
 		$('#wrapper_bgndVideo').css('filter','blur(10px)');
 	});
-    console.log(availableTags);
+
+    $('.log-in').click(()=> {
+        function complete(){
+		$('.second-section').fadeIn(1000);
+		$('.sign-up-form-container').css('display','none');			
+		}
+		$('.first-section').fadeOut(1000,complete);					
+		$('#wrapper_bgndVideo').css('filter','blur(10px)');
+    });
+    console.log(registered);
+    if(registered){
+        console.log("test");
+        $('#accountSetting').modal('show');    
+    }
 	var nameSource = availableTags.split(",");
 	nameSource = nameSource.slice(0, -2);
     $("#search-input").focus(function(){

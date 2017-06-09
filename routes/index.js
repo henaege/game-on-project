@@ -215,7 +215,7 @@ router.get('/user', (req, res)=>{
             REBrank: REBrank,
             MINrank: MINrank,
             THREErank: THREErank,
-            nameArray: array
+            nameArray: array,
             });
       }); 
     });
@@ -282,27 +282,50 @@ router.post('/user', (req, res)=>{
 });
 
   router.post("/signUp", (req, res)=>{
+
+    var message = req.query.msg;
     var username = req.body.username;
     var password = req.body.password;
+    var email = req.body.email;
     var hash = bcrypt.hashSync(password);
-    var selectQuery = "SELECT * FROM users WHERE username = ?;";
-    connection.query(selectQuery, [username], (error, results)=> {
+    var selectQuery = "SELECT * FROM users WHERE email = ?;";
+    
+    connection.query(selectQuery, [email], (error, results)=> {
       if (results.length == 0){
-        console.log(username);
-        var insertQuery = "INSERT INTO users(username, password) VALUES(?,?);";
-        connection.query(insertQuery, [username, hash], (error, results)=> {
+        var insertQuery = "INSERT INTO users(username, password, email) VALUES(?,?,?);";
+        connection.query(insertQuery, [username, hash, email], (error, results)=> {
           console.log(username);
           if(error) throw error;
           req.session.username = username;
           req.session.loggedin = true;
+          req.session.registered = true;
           res.redirect('/user?msg=registered');
         });
       } else {
         res.redirect('/?msg=existingUser')
       }
     })
-
-
   });
+    
+    router.post('/login', (req, res)=> {
+      console.log(req.body)
+      var email = req.body.email;
+      var password = req.body.password;
+      var hash = bcrypt.hashSync(password);
+      var selectQuery = "SELECT * FROM users WHERE email = ?;";
+      connection.query(selectQuery, [email], (error, results)=> {
+        if(error) throw error;
+        if (results.length == 1){
+            var match = bcrypt.compareSync(password, results[0].password);
+            if (match){
+              req.session.email = email;
+              req.session.loggedin = true;
+              res.redirect('/user?msg=loggedin');
+          } else {
+          res.redirect('/?msg=invalid')
+          }
+        };
+      });
+    });
 
 module.exports = router;

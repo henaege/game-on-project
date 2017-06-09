@@ -7,9 +7,15 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+var expressParser = require('express-session');
 var app = express();
+var serverInfo = require('./config/config');
 
+app.use(expressParser({
+  secret: serverInfo.session.secret,
+  resave: serverInfo.session.resave,
+  saveUninitialized: serverInfo.session.saveUninitialized
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
