@@ -11,8 +11,21 @@ html
 		script(src="https://code.highcharts.com/highcharts-more.js")
 		script(src="https://code.highcharts.com/modules/exporting.js")
 		script.
-			var availableTags = "#{playersFullName}";
-			console.log(availableTags);
+			var availableTags = "#{nameArray}";
+			//- console.log(availableTags);
+			if(#{PPGrank} != undefined) {
+				var teamName= "#{teamName}";
+				var position= "#{position}";
+				var fullName= "#{fullName}";
+				var PPGrank = "#{PPGrank}";
+				var ASSrank = "#{ASSrank}";
+				var STLrank = "#{STLrank}";
+				var REBrank = "#{REBrank}";
+				var MINrank = "#{MINrank}";
+				var THREErank = "#{THREErank}";
+				console.log(PPGrank);
+			}
+			
 		script(type='text/javascript' src='/javascripts/script.js')
 	body
 		div.main-content-container.container
@@ -41,7 +54,26 @@ html
 
 				div.charts-container.col-sm-7
 					div#charts(style="width:100%; height:400px;") 
-						
+					div#stats-table.text-center 
+						table.table.table-striped
+							h4 Player Stats Per Game
+							thead
+								tr 
+									th Points
+									th Assists
+									th Steals
+									th Rebounds
+									th 3 Points
+									th Min Played
+							tbody
+								tr 
+									td #{total_points}
+									td #{assists}
+									td #{steals}
+									td #{rebounds}
+									td #{three_points}
+									td #{minutes}
+
 				div.news-container.col-sm-2
 					div.news
 						h3 News
