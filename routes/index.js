@@ -158,17 +158,12 @@ connection.connect();
 //////////////////
 
 router.get('/user', (req, res)=>{
-<<<<<<< HEAD
   console.log('request');
   bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
   randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
   console.log(randomGoodPlayer);
-=======
 
-  bestPlayerIds = [106, 129, 187, 20, 236, 231];
-  randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*6)];
-  // console.log(randomGoodPlayer);
->>>>>>> 1b02075636af8cc478fc5e4e71788fd54fd45b86
+
 
   var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
   connection.query(selectQuery, (error, results)=>{
