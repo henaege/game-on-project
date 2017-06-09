@@ -8,20 +8,24 @@ var serverInfo = require('../config/config');
 // router.get('/', function(req, res, next) {
 //   res.render('index', { });
 // });
-router.get('/user', function(req, res, next){
-  var array = [];
-  var playerName = req.body.search;
-  var selectQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
-  connection.query(selectQuery, (error, results)=>{
-    if(error) throw error;
-    for (let i = 0; i < results.length; i++){
-      array.push(results[i].full_name);
-    }
-    // console.log(array);
-    res.render('user-page', {playersFullName: array, sessionInfo: req.session});
-  });
-  // res.render('user-page', { });
-});
+
+
+
+
+// router.get('/user', function(req, res, next){
+//   var array = [];
+//   var playerName = req.body.search;
+//   var selectQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
+//   connection.query(selectQuery, (error, results)=>{
+//     if(error) throw error;
+//     for (let i = 0; i < results.length; i++){
+//       array.push(results[i].full_name);
+//     }
+//     // console.log(array);
+//     res.render('user-page', {playersFullName: array, sessionInfo: req.session});
+//   });
+//   // res.render('user-page', { });
+// });
 
 
 // var APIdata;
@@ -149,6 +153,40 @@ var connection = mysql.createConnection({
     database: serverInfo.database
 });
 connection.connect();
+
+//////////////////
+
+router.get('/user', (req, res)=>{
+  console.log('request');
+  bestPlayerIds = [106, 129, 187, 20, 236, 231];
+  randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*6)];
+  console.log(randomGoodPlayer);
+
+  var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
+  connection.query(selectQuery, (error, results)=>{
+    if(error) throw error;
+    var photoUrl = results[0].photo;
+    var teamName = results[0].team;
+    var position = results[0].position;
+    var firstName = results[0].first_name;
+    var lastName = results[0].last_name;
+    var fullName = firstName + ' ' + lastName;
+
+
+        res.render('user-page', {
+          photoUrl: photoUrl,
+            teamName: teamName,
+            position: position,
+            fullName: fullName,
+            sessionInfo: req.session
+            });
+        });
+
+});
+
+
+/////////////////////
+
 router.post('/user', (req, res)=>{
   var fullName = req.body.search;
   var nameArray = req.body.search.split(' ');

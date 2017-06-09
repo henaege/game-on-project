@@ -29,7 +29,7 @@ Highcharts.chart('charts', {
     },
 
     title: {
-        text: 'Budget vs spending',
+        text: 'Player Percentiles',
         x: -80
     },
 
@@ -63,7 +63,7 @@ Highcharts.chart('charts', {
     },
 
     series: [{
-        name: 'Stephen Curry',
+        name: 'step curry',
         data: [24.4, 6.4, 0.4, 4.3, 1.8, 32.2],
         pointPlacement: 'on'
     }, {
