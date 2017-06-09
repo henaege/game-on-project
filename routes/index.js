@@ -163,7 +163,9 @@ router.get('/user', (req, res)=>{
   randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
   console.log(randomGoodPlayer);
 
-
+  var loggedInUser = req.session.email;
+  // var usernameQuery = 
+  
 
   var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
   connection.query(selectQuery, (error, results)=>{
@@ -219,6 +221,7 @@ router.get('/user', (req, res)=>{
             THREErank: THREErank,
             nameArray: array,
             id: randomGoodPlayer,
+            user: loggedInUser
             });
       }); 
     });
