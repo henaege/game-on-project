@@ -7,19 +7,23 @@ $(document).ready(function(){
 		$('.first-section').fadeOut(1000,complete);					
 		$('#wrapper_bgndVideo').css('filter','blur(10px)');
 	});
+    console.log(availableTags);
 	var nameSource = availableTags.split(",");
 	nameSource = nameSource.slice(0, -2);
-	// console.log(nameSource);
-    $( "#search-input" ).autocomplete({
-    	minLength: 2,
-      source: function( request, response ) {
-          var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
-          response( $.grep( nameSource, function( item ){
+    $("#search-input").focus(function(){
+        console.log(nameSource);
+        $("#search-input").autocomplete({
+    	    minLength: 2,
+            source: function( request, response ) {
+            var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+            response( $.grep( nameSource, function( item ){
               return matcher.test( item );
-          }) );
-      }
+            }) );
+            }
+        });
     });
 
+    console.log(typeof(PPGrank));
 	
 Highcharts.chart('charts', {
 
@@ -29,7 +33,7 @@ Highcharts.chart('charts', {
     },
 
     title: {
-        text: 'Player Percentiles',
+        text: 'Player Ranking',
         x: -80
     },
 
@@ -48,6 +52,8 @@ Highcharts.chart('charts', {
         gridLineInterpolation: 'polygon',
         lineWidth: 0,
         min: 0,
+        max: 100,
+        
     },
 
     tooltip: {
@@ -63,12 +69,12 @@ Highcharts.chart('charts', {
     },
 
     series: [{
-        name: 'step curry',
-        data: [24.4, 6.4, 0.4, 4.3, 1.8, 32.2],
+        name: fullName,
+        data: [parseFloat(PPGrank),parseFloat(ASSrank), parseFloat(THREErank), parseFloat(REBrank), parseFloat(STLrank), parseFloat(MINrank)],
         pointPlacement: 'on'
     }, {
         name: 'Average',
-        data: [7.3, 1.6, 0.7, 3, 0.5, 17],
+        data: [50, 50, 50, 50, 50, 50],
         pointPlacement: 'on'
     }]
 

@@ -4,6 +4,7 @@ var mysql = require('mysql');
 var btoa = require('btoa');
 var bcrypt = require('bcrypt-nodejs');
 var serverInfo = require('../config/config');
+var array = [];
 /* GET home page. */
 // router.get('/', function(req, res, next) {
 //   res.render('index', { });
@@ -157,10 +158,10 @@ connection.connect();
 //////////////////
 
 router.get('/user', (req, res)=>{
-  console.log('request');
+
   bestPlayerIds = [106, 129, 187, 20, 236, 231];
   randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*6)];
-  console.log(randomGoodPlayer);
+  // console.log(randomGoodPlayer);
 
   var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
   connection.query(selectQuery, (error, results)=>{
@@ -172,16 +173,53 @@ router.get('/user', (req, res)=>{
     var lastName = results[0].last_name;
     var fullName = firstName + ' ' + lastName;
 
+    var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank,total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE id = ${randomGoodPlayer};`;
 
-        res.render('user-page', {
-          photoUrl: photoUrl,
+    connection.query(rankQuery, (error, results)=> {
+      console.log(results[0]);
+      var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
+      var ASSrank = Math.round((results[0].ASSrank/517)*10000)/100;
+      var STLrank = Math.round((results[0].STLrank/517)*10000)/100;
+      var REBrank = Math.round((results[0].REBrank/517)*10000)/100;
+      var MINrank = Math.round((results[0].MINrank/517)*10000)/100;
+      var THREErank = Math.round((results[0].THREErank/517)*10000)/100;
+      var total_points = results[0].total_points;
+      var assists = results[0].assists;
+      var steals = results[0].steals;
+      var rebounds = results[0].rebounds;
+      var minutes = Math.round(results[0].minutes * 100) / 100;
+      var three_points = results[0].three_points;
+        array = [];
+        var nameQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
+        connection.query(nameQuery, (error, results)=>{
+          if(error) throw error;
+          for (let i = 0; i < results.length; i++){
+              array.push(results[i].full_name);
+          }
+          console.log(array);
+          res.render('user-page', {
+            photoUrl: photoUrl,
             teamName: teamName,
             position: position,
             fullName: fullName,
-            sessionInfo: req.session
+            sessionInfo: req.session,
+            total_points: total_points,
+            assists: assists,
+            steals: steals,
+            rebounds: rebounds,
+            minutes: minutes,
+            three_points: three_points,
+            PPGrank: PPGrank,
+            ASSrank: ASSrank,
+            STLrank: STLrank,
+            REBrank: REBrank,
+            MINrank: MINrank,
+            THREErank: THREErank,
+            nameArray: array
             });
-        });
-
+      }); 
+    });
+  });
 });
 
 
@@ -202,13 +240,43 @@ router.post('/user', (req, res)=>{
       var photoUrl = results[0].photo;
       var teamName = results[0].team;
       var position = results[0].position;
+      
+      var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank, total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE id = ${playerId};`;
+
+    connection.query(rankQuery, (error, results)=> {
+      var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
+      var ASSrank = Math.round((results[0].ASSrank/517)*10000)/100;
+      var STLrank = Math.round((results[0].STLrank/517)*10000)/100;
+      var REBrank = Math.round((results[0].REBrank/517)*10000)/100;
+      var MINrank = Math.round((results[0].MINrank/517)*10000)/100;
+      var THREErank = Math.round((results[0].THREErank/517)*10000)/100;
+      var total_points = results[0].total_points;
+      var assists = results[0].assists;
+      var steals = results[0].steals;
+      var rebounds = results[0].rebounds;
+      var minutes = Math.round(results[0].minutes * 100) / 100;
+      var three_points = results[0].three_points;
       res.render('user-page', {
           photoUrl: photoUrl, 
           teamName: teamName, 
           position: position,
           fullName: fullName,
-          sessionInfo: req.session
+          sessionInfo: req.session,
+          PPGrank: PPGrank,
+          ASSrank: ASSrank,
+          STLrank: STLrank,
+          REBrank: REBrank,
+          MINrank: MINrank,
+          THREErank: THREErank,
+          nameArray: array,
+          total_points: total_points,
+          assists: assists,
+          steals: steals,
+          rebounds: rebounds,
+          minutes: minutes,
+          three_points: three_points
         });
+      });
     });
   });
 });
@@ -223,6 +291,7 @@ router.post('/user', (req, res)=>{
         console.log(username);
         var insertQuery = "INSERT INTO users(username, password) VALUES(?,?);";
         connection.query(insertQuery, [username, hash], (error, results)=> {
+          console.log(username);
           if(error) throw error;
           req.session.username = username;
           req.session.loggedin = true;
@@ -232,6 +301,8 @@ router.post('/user', (req, res)=>{
         res.redirect('/?msg=existingUser')
       }
     })
+
+
   });
 
 module.exports = router;
