@@ -25,11 +25,8 @@ html
 				var MINrank = "#{MINrank}";
 				var THREErank = "#{THREErank}";
 				var id = "#{id}";
-				console.log(id);
 			}
 			var registered = "#{sessionInfo.registered}";
-			var user = "#{user}";
-			console.log(user)
 			
 		script(type='text/javascript' src='/javascripts/script.js')
 	body
@@ -39,15 +36,8 @@ html
 					div.modal-content
 						div.modal-header
 							button.close(type="button" data-dismiss="modal" aria-label="Close")
-							h4.modal-title#gridSystemModalLabel Welcome, #{user}
+							h4.modal-title#gridSystemModalLabel User Settings
 						div.modal-body
-							div.row
-								div.col-xs-6.text-center
-									p user name
-								div.col-xs-6
-									button.btn.btn-warning(type="submit") Edit
-							div.row
-								div.container
 						div.modal-footer
 							button.btn.btn-default(type="button" data-dismiss="modal") Cancel
 							button.btn.btn-primary(type="submit") Save changes
