@@ -24,7 +24,8 @@ html
 				var REBrank = "#{REBrank}";
 				var MINrank = "#{MINrank}";
 				var THREErank = "#{THREErank}";
-				console.log(PPGrank);
+				var id = "#{id}";
+				console.log(id);
 			}
 			var registered = "#{sessionInfo.registered}";
 			console.log(registered)
@@ -37,7 +38,7 @@ html
 					div.modal-content
 						div.modal-header
 							button.close(type="button" data-dismiss="modal" aria-label="Close")
-							h4.modal-title#gridSystemModalLabel Modal title
+							h4.modal-title#gridSystemModalLabel User Settings
 						div.modal-body
 						div.modal-footer
 							button.btn.btn-default(type="button" data-dismiss="modal") Cancel
@@ -57,16 +58,20 @@ html
 							form.form-group(action="/user" method="post")
 								input#search-input(type="text", placeholder="Search", name="search")
 								button(type="submit") Submit
-						div.pic
-							-if("#{photoUrl}" != undefined)
-								img(src="#{photoUrl}")
-						div.info
-							-if ("#{fullName}" != undefined)
-								ul
-									li Name: #{fullName}
-									li Team: #{teamName}
-									li Position: #{position}
-
+								div.pic
+									-if("#{photoUrl}" != undefined)
+										img(src="#{photoUrl}")
+										
+							div.info
+								-if ("#{fullName}" != undefined)
+									ul
+										li Name: #{fullName}
+										li Team: #{teamName}
+										li Position: #{position}
+								form.favorite-form(action="/add_fav" method="post")		
+									input#fav-input(type="hidden",name="favorite" value="#{id}") 
+									button(type="submit") Add Player
+								
 
 				div.charts-container.col-sm-7
 					div#charts(style="width:100%; height:400px;") 

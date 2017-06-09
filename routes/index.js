@@ -218,6 +218,7 @@ router.get('/user', (req, res)=>{
             MINrank: MINrank,
             THREErank: THREErank,
             nameArray: array,
+            id: randomGoodPlayer,
             });
       }); 
     });
@@ -227,7 +228,18 @@ router.get('/user', (req, res)=>{
 
 /////////////////////
 
-router.post('/user', (req, res)=>{,
+router.post('/add_fav', (req,res)=>{
+  var fav = req.body.favorite;
+  var user_email = req.session.email;
+  var favQuery = `INSERT INTO users(favorites) VALUES (${fav}) WHERE email= '${user_email}';`;
+  connection.query(favQuery,(error, results)=>{
+    if(error)throw error;
+    res.redirect('/user?msg=addedPlayer');
+  });
+});
+
+
+router.post('/user', (req, res)=>{
   var fullName = req.body.search;
   var nameArray = req.body.search.split(' ');
   var playerId;
@@ -276,7 +288,8 @@ router.post('/user', (req, res)=>{,
           steals: steals,
           rebounds: rebounds,
           minutes: minutes,
-          three_points: three_points
+          three_points: three_points,
+          id: playerId,
         });
       });
     });
