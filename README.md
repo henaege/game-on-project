@@ -45,7 +45,7 @@ Mob programming was utilized to build the database and core functionality, as we
 Users are treated to a full-page background video with a simple logo, log in button (for those who already have accounts), and a Get Started button (for those who don't). The full page video lends an atmosphere of immersion and the simple interface lends it self to a quick, frustration-free user experience.
 The Get Started button takes a new user to a registration form where they can enter a user name and password. Their data is sent to a MySQL database via the insertQuery method used by nysql node. User input is sanitized to avoid insertion attacks and Passwords are encrypted and stored in our database securely using bcrypt.
 <p align='center'>
-    <img src="pubilc/images/index.png"/>
+    <img src="pubilc/images/index.png"/></img>
 </p>
 
 ### User Page
