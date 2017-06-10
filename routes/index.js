@@ -200,13 +200,14 @@ router.get('/user', (req, res)=>{
           for (let i = 0; i < results.length; i++){
               array.push(results[i].full_name);
           }
-          var userFaves = []; 
+      var userFaves = [];
+      var user_email = req.session.email;
       var faveQuery = `SELECT 
-                        CONCAT(player_info.first_name, ' ',
+                        CONCAT(player_info.first_name,' ',
                         player_info.last_name)
                         AS player_full_name
                        FROM player_info
-                       INNER JOIN fav_player ON player_info.id = fav_player.player_id;`;
+                       WHERE id = (SELECT player_id FROM fav_player WHERE user_email = ${user_email});`
       connection.query(faveQuery, (error, results)=> {
         for (let i = 0; i < results.length; i++) {
           
@@ -334,7 +335,7 @@ router.post('/user', (req, res)=>{
         connection.query(insertQuery, [username, hash, email], (error, results)=> {
           console.log(username);
           if(error) throw error;
-          req.session.username = results.username;
+          // req.session.username = results.username;
           req.session.loggedin = true;
           req.session.registered = true;
           res.redirect('/user?msg=registered');
