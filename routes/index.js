@@ -155,15 +155,15 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
-//////////////////
 
 router.get('/user', (req, res)=>{
-  console.log('request');
+
   bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
   randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
   console.log(randomGoodPlayer);
 
-
+  var newsApiKey = sessionInfo.newsApiKey;
+  var newsUrl = 'https://newsapi.org/v1/articles'
 
   var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
   connection.query(selectQuery, (error, results)=>{
