@@ -28,11 +28,8 @@ html
 				var THREErank = "#{THREErank}";
 				var id = "#{id}";
 			}
-			console.log("#{userFaves}")
 			var registered = "#{sessionInfo.registered}";
 			var user = "#{sessionInfo.username}";
-			console.log(user)
-			
 		script(type='text/javascript' src='/javascripts/script.js')
 	body
 		div.main-content-container.container
@@ -64,13 +61,13 @@ html
 										th.text-center Player
 										th.text-center Action
 									tbody
-									- each val in userFaves
-
-										tr.text-center
-										td.text-center= val
-										td.text-center
-											a(href="/delete/#{val.id}")
-											button.btn.btn-danger Remove
+									-if (userFaves != undefined)
+										each val in userFaves
+											tr.text-center
+												td.text-center= val
+												td.text-center
+													a(href="/delete/#{val.id}")
+													button.btn.btn-danger Remove
 							
 											
 						div.modal-footer
@@ -129,6 +126,13 @@ html
 									td #{minutes}
 
 				div.news-container.col-sm-2
-					div.news
-						h3 News
+					h3 News
+					- if (news != undefined)
+						each val in news
+							a(href="#{val[1]}" target="_blank")
+								p.headline= val[0]
+
+					
+
+
 					
