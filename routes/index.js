@@ -161,9 +161,11 @@ router.get('/user', (req, res)=>{
   bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
   randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
   console.log(randomGoodPlayer);
-
   var newsApiKey = sessionInfo.newsApiKey;
   var newsUrl = 'https://newsapi.org/v1/articles'
+  
+  // var usernameQuery = 
+  
 
   var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
   connection.query(selectQuery, (error, results)=>{
@@ -198,7 +200,23 @@ router.get('/user', (req, res)=>{
           for (let i = 0; i < results.length; i++){
               array.push(results[i].full_name);
           }
-          console.log(array);
+          var userFaves = []; 
+      var faveQuery = `SELECT 
+                        CONCAT(player_info.first_name, ' ',
+                        player_info.last_name)
+                        AS player_full_name
+                       FROM player_info
+                       INNER JOIN fav_player ON player_info.id = fav_player.player_id;`;
+      connection.query(faveQuery, (error, results)=> {
+        for (let i = 0; i < results.length; i++) {
+          
+          userFaves.push(results[i].player_full_name);
+        };
+        console.log(userFaves);
+        var sessionInfo = req.session;
+        console.log(sessionInfo);
+        
+        
           res.render('user-page', {
             photoUrl: photoUrl,
             teamName: teamName,
@@ -219,8 +237,13 @@ router.get('/user', (req, res)=>{
             THREErank: THREErank,
             nameArray: array,
             id: randomGoodPlayer,
+            userFaves: userFaves
             });
-      }); 
+            });
+      });
+
+      
+
     });
   });
 });
@@ -311,7 +334,7 @@ router.post('/user', (req, res)=>{
         connection.query(insertQuery, [username, hash, email], (error, results)=> {
           console.log(username);
           if(error) throw error;
-          req.session.username = username;
+          req.session.username = results.username;
           req.session.loggedin = true;
           req.session.registered = true;
           res.redirect('/user?msg=registered');
@@ -335,6 +358,7 @@ router.post('/user', (req, res)=>{
             if (match){
               req.session.email = email;
               req.session.loggedin = true;
+              req.session.username = results[0].username;
               res.redirect('/user?msg=loggedin');
           } else {
           res.redirect('/?msg=invalid')

@@ -13,6 +13,8 @@ html
 		script(src="https://code.highcharts.com/modules/exporting.js")
 		script.
 			var availableTags = "#{nameArray}";
+			var userFaves = "#{userFaves}";
+			
 			//- console.log(availableTags);
 			if(#{PPGrank} != undefined) {
 				var teamName= "#{teamName}";
@@ -26,7 +28,10 @@ html
 				var THREErank = "#{THREErank}";
 				var id = "#{id}";
 			}
+			console.log("#{userFaves}")
 			var registered = "#{sessionInfo.registered}";
+			var user = "#{sessionInfo.username}";
+			console.log(user)
 			
 		script(type='text/javascript' src='/javascripts/script.js')
 	body
@@ -36,8 +41,38 @@ html
 					div.modal-content
 						div.modal-header
 							button.close(type="button" data-dismiss="modal" aria-label="Close")
-							h4.modal-title#gridSystemModalLabel User Settings
+							h4.modal-title#gridSystemModalLabel Welcome, #{sessionInfo.username}
 						div.modal-body
+							div.row
+								div.col-sm-12.text-center
+								table.table
+									thead
+									tr
+										th.text-center Your User Name
+										th.text-center Action
+									tbody
+										tr.text-center
+										td.text-center #{sessionInfo.username}
+										td.text-center
+											button.btn.btn-warning Edit
+									
+							div.row
+								div.col-sm-12.text-center
+								table.table
+									thead
+									tr
+										th.text-center Player
+										th.text-center Action
+									tbody
+									- each val in userFaves
+
+										tr.text-center
+										td.text-center= val
+										td.text-center
+											a(href="/delete/#{val.id}")
+											button.btn.btn-danger Remove
+							
+											
 						div.modal-footer
 							button.btn.btn-default(type="button" data-dismiss="modal") Cancel
 							button.btn.btn-primary(type="submit") Save changes
