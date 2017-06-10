@@ -167,7 +167,6 @@ router.get('/user', (req, res)=>{
     randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
   }
   var news = []
-  
     var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
     connection.query(selectQuery, (error, results)=>{
       if(error) throw error;
@@ -186,39 +185,39 @@ router.get('/user', (req, res)=>{
         }
       var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank,total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE id = ${randomGoodPlayer};`;
 
-      connection.query(rankQuery, (error, results)=> {
-        console.log(results[0]);
-        var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
-        var ASSrank = Math.round((results[0].ASSrank/517)*10000)/100;
-        var STLrank = Math.round((results[0].STLrank/517)*10000)/100;
-        var REBrank = Math.round((results[0].REBrank/517)*10000)/100;
-        var MINrank = Math.round((results[0].MINrank/517)*10000)/100;
-        var THREErank = Math.round((results[0].THREErank/517)*10000)/100;
-        var total_points = results[0].total_points;
-        var assists = results[0].assists;
-        var steals = results[0].steals;
-        var rebounds = results[0].rebounds;
-        var minutes = Math.round(results[0].minutes * 100) / 100;
-        var three_points = results[0].three_points;
+        connection.query(rankQuery, (error, results)=> {
+          console.log(results[0]);
+          var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
+          var ASSrank = Math.round((results[0].ASSrank/517)*10000)/100;
+          var STLrank = Math.round((results[0].STLrank/517)*10000)/100;
+          var REBrank = Math.round((results[0].REBrank/517)*10000)/100;
+          var MINrank = Math.round((results[0].MINrank/517)*10000)/100;
+          var THREErank = Math.round((results[0].THREErank/517)*10000)/100;
+          var total_points = results[0].total_points;
+          var assists = results[0].assists;
+          var steals = results[0].steals;
+          var rebounds = results[0].rebounds;
+          var minutes = Math.round(results[0].minutes * 100) / 100;
+          var three_points = results[0].three_points;
           array = [];
           var nameQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
           connection.query(nameQuery, (error, results)=>{
             if(error) throw error;
-            for (let i = 0; i < results.length; i++){
+              for (let i = 0; i < results.length; i++){
                 array.push(results[i].full_name);
-            }
-            var userFaves = []; 
-            var faveQuery = `SELECT 
-                          CONCAT(player_info.first_name, ' ',
+              }
+              var userFaves = [];
+              var faveQuery = `SELECT CONCAT(player_info.first_name, ' ',
                           player_info.last_name)
                           AS player_full_name
                          FROM player_info
                          INNER JOIN fav_player ON player_info.id = fav_player.player_id;`;
             connection.query(faveQuery, (error, results)=> {
-              for (let i = 0; i < results.length; i++) {
+
+              for (let i = 0; i < results.length; i++) { 
                 userFaves.push(results[i].player_full_name);
               };
-            var sessionInfo = req.session;
+              var sessionInfo = req.session;
               res.render('user-page', {
                 photoUrl: photoUrl,
                 teamName: teamName,
@@ -241,13 +240,13 @@ router.get('/user', (req, res)=>{
                 id: randomGoodPlayer,
                 userFaves: userFaves,
                 news:news
+              });
             });
           });
         });
       });
     });
   });
-});
 
 
 /////////////////////
@@ -347,7 +346,7 @@ router.post('/user', (req, res)=>{
         connection.query(insertQuery, [username, hash, email], (error, results)=> {
           console.log(username);
           if(error) throw error;
-          req.session.username = results.username;
+          // req.session.username = results.username;
           req.session.loggedin = true;
           req.session.registered = true;
           res.redirect('/user?msg=registered');
