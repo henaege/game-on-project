@@ -29,19 +29,31 @@ html
 						h1 GAME ON
 							h3 A Data Visualization Experience
 				button.btn.btn-default#start-btn(onclick="jQuery('#bgndVideo').YTPPause()") Get Started
-			div.second-section.container
+			div.second-section.container.text-center
 				div.row
-					div.form-container.col-sm-12
+					div.sign-up-form-container.col-sm-12
 						form.sign-up(action="/signUp" method="post")
 							div.form-group
 								label User Name
 								input(type='text' placeholder='User Name' name="username")
 							div.form-group
+								label Email
+								input(type='email' placeholder='Email' name="email")
+							div.form-group
+								label Password
+								input(type='password' placeholder='Password' name="password")
+							div.form-group
+								label 
+							button.btn.btn-success.sign-up-btn(type='submit') Submit
+					div.login-form-container.col-sm-12
+						form.login(action='/login' method="post")
+							div.form-group
+								label Email
+								input(type='email' placeholder='Email' name="email") 
+							div.form-group
 								label Password
 								input(type='password' placeholder='Password' name="password")
 							button.btn.btn-success(type='submit') Submit
-
-
 
 
 

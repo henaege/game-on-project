@@ -92,3 +92,11 @@ label {
   height: 20%;
   border: 1px solid green;
 }
+
+.news-container {
+  overflow: scroll;
+}
+
+#compare-search-input{
+    display: none;
+}
