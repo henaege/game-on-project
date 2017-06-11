@@ -161,6 +161,7 @@ router.get('/user', (req, res)=>{
   bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
   randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
   console.log(randomGoodPlayer);
+  sessionInfo = req.session;
   var newsApiKey = sessionInfo.newsApiKey;
   var newsUrl = 'https://newsapi.org/v1/articles'
   
@@ -201,13 +202,13 @@ router.get('/user', (req, res)=>{
               array.push(results[i].full_name);
           }
       var userFaves = [];
-      var user_email = req.session.email;
+      var userEmail = req.session.email;
       var faveQuery = `SELECT 
                         CONCAT(player_info.first_name,' ',
                         player_info.last_name)
                         AS player_full_name
                        FROM player_info
-                       WHERE id = (SELECT player_id FROM fav_player WHERE user_email = ${user_email});`
+                       WHERE id = (SELECT player_id FROM fav_player WHERE user_email = ${userEmail});`
       connection.query(faveQuery, (error, results)=> {
         for (let i = 0; i < results.length; i++) {
           
