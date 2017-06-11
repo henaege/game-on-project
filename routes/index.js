@@ -166,8 +166,9 @@ router.get('/user', (req, res)=>{
     bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
     randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
   }
-  var news = []
-    var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
+  var news = [];
+  var averagePlayerId = 519;
+    var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE (id = ${randomGoodPlayer}) OR (id = ${averagePlayerId});`;
     connection.query(selectQuery, (error, results)=>{
       if(error) throw error;
       var photoUrl = results[0].photo;
@@ -176,6 +177,8 @@ router.get('/user', (req, res)=>{
       var firstName = results[0].first_name;
       var lastName = results[0].last_name;
       var fullName = firstName + ' ' + lastName;
+      var compName = results[1].first_name + ' ' + results[1].last_name;
+
       var newsUrl = `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${fullName}&page=2&sort=newest&api-key=${newsApiKey}`;
       request.get(newsUrl, (err, response, newsData)=>{
         var newsData = JSON.parse(newsData);
@@ -183,7 +186,7 @@ router.get('/user', (req, res)=>{
         for (let i = 0; i < newsData.response.docs.length; i ++){
           news.push([newsData.response.docs[i].headline.main, newsData.response.docs[i].web_url]);
         }
-      var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank,total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE id = ${randomGoodPlayer};`;
+      var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank,total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE (id = ${randomGoodPlayer}) OR (id = ${averagePlayerId});`;
 
         connection.query(rankQuery, (error, results)=> {
           console.log(results[0]);
@@ -199,6 +202,20 @@ router.get('/user', (req, res)=>{
           var rebounds = results[0].rebounds;
           var minutes = Math.round(results[0].minutes * 100) / 100;
           var three_points = results[0].three_points;
+
+          var compPPGrank = Math.round((results[1].PPGrank/517)*10000)/100;
+          var compASSrank = Math.round((results[1].ASSrank/517)*10000)/100;
+          var compSTLrank = Math.round((results[1].STLrank/517)*10000)/100;
+          var compREBrank = Math.round((results[1].REBrank/517)*10000)/100;
+          var compMINrank = Math.round((results[1].MINrank/517)*10000)/100;
+          var compTHREErank = Math.round((results[1].THREErank/517)*10000)/100;
+          var comptotal_points = results[1].total_points;
+          var compassists = results[1].assists;
+          var compsteals = results[1].steals;
+          var comprebounds = results[1].rebounds;
+          var compminutes = Math.round(results[1].minutes * 100) / 100;
+          var compthree_points = results[1].three_points;
+
           array = [];
           var nameQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
           connection.query(nameQuery, (error, results)=>{
@@ -216,14 +233,14 @@ router.get('/user', (req, res)=>{
 
               for (let i = 0; i < results.length; i++) { 
                 userFaves.push(results[i].player_full_name);
-              };
+              }
               var sessionInfo = req.session;
               res.render('user-page', {
                 photoUrl: photoUrl,
                 teamName: teamName,
                 position: position,
                 fullName: fullName,
-                sessionInfo: req.session,
+                sessionInfo: sessionInfo,
                 total_points: total_points,
                 assists: assists,
                 steals: steals,
@@ -239,7 +256,20 @@ router.get('/user', (req, res)=>{
                 nameArray: array,
                 id: randomGoodPlayer,
                 userFaves: userFaves,
-                news:news
+                news:news,
+                compPPGrank: compPPGrank,
+                compASSrank: compASSrank,
+                compSTLrank: compSTLrank,
+                compREBrank: compREBrank,
+                compMINrank: compMINrank,
+                compTHREErank: compTHREErank,
+                comptotal_points: comptotal_points,
+                compassists: compassists,
+                compsteals: compsteals,
+                comprebounds: comprebounds,
+                compminutes: compminutes,
+                compthree_points: compthree_points,
+                compName: compName
               });
             });
           });
@@ -265,10 +295,18 @@ router.post('/add_fav', (req,res)=>{
 router.post('/user', (req, res)=>{
   var fullName = req.body.search;
   var nameArray = req.body.search.split(' ');
+  var compName = req.body.compare;
+  var compNameArray = req.body.compare.split(' ');
+
+  var compareId;
   var playerId;
+
+
+
   var news = [];
   var newsUrl = `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${fullName}&page=2&sort=newest&api-key=${newsApiKey}`;
-  var idQuery = `SELECT id FROM player_info WHERE first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}';`;
+  var idQuery = `SELECT id FROM player_info WHERE (first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}')
+  OR (first_name = '${compNameArray[0]}' AND last_name = '${compNameArray[1]}');`;
   request.get(newsUrl, (err, response, newsData)=>{
     var newsData = JSON.parse(newsData);
     if (err) throw err;
@@ -279,6 +317,8 @@ router.post('/user', (req, res)=>{
     connection.query(idQuery,(error, results)=> {
       if (error) throw error;
       playerId = results[0].id;
+      compareId = results[1].id;
+
       // console.log(typeof(playerId));
       var selectQuery = `SELECT photo, team, position FROM player_info WHERE id = ${playerId};`;
 
@@ -288,7 +328,7 @@ router.post('/user', (req, res)=>{
           var teamName = results[0].team;
           var position = results[0].position;
           
-          var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank, total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE id = ${playerId};`;
+          var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank, total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE (id = ${playerId}) OR (id = ${compareId});`;
 
           connection.query(rankQuery, (error, results)=> {
             var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
@@ -303,27 +343,68 @@ router.post('/user', (req, res)=>{
             var rebounds = results[0].rebounds;
             var minutes = Math.round(results[0].minutes * 100) / 100;
             var three_points = results[0].three_points;
+
+            var compPPGrank = Math.round((results[1].PPGrank/517)*10000)/100;
+            var compASSrank = Math.round((results[1].ASSrank/517)*10000)/100;
+            var compSTLrank = Math.round((results[1].STLrank/517)*10000)/100;
+            var compREBrank = Math.round((results[1].REBrank/517)*10000)/100;
+            var compMINrank = Math.round((results[1].MINrank/517)*10000)/100;
+            var compTHREErank = Math.round((results[1].THREErank/517)*10000)/100;
+            var comptotal_points = results[1].total_points;
+            var compassists = results[1].assists;
+            var compsteals = results[1].steals;
+            var comprebounds = results[1].rebounds;
+            var compminutes = Math.round(results[1].minutes * 100) / 100;
+            var compthree_points = results[1].three_points;
+
+              var userFaves = [];
+              var faveQuery = `SELECT CONCAT(player_info.first_name, ' ',
+                          player_info.last_name)
+                          AS player_full_name
+                         FROM player_info
+                         INNER JOIN fav_player ON player_info.id = fav_player.player_id;`;
+              connection.query(faveQuery, (error, results)=> {
+
+                  for (let i = 0; i < results.length; i++) {
+                      userFaves.push(results[i].player_full_name);
+                  }
+
             res.render('user-page', {
-              photoUrl: photoUrl, 
-              teamName: teamName, 
-              position: position,
-              fullName: fullName,
-              sessionInfo: req.session,
-              PPGrank: PPGrank,
-              ASSrank: ASSrank,
-              STLrank: STLrank,
-              REBrank: REBrank,
-              MINrank: MINrank,
-              THREErank: THREErank,
-              nameArray: array,
-              total_points: total_points,
-              assists: assists,
-              steals: steals,
-              rebounds: rebounds,
-              minutes: minutes,
-              three_points: three_points,
-              id: playerId,
-              news: news
+                photoUrl: photoUrl,
+                teamName: teamName,
+                position: position,
+                fullName: fullName,
+                sessionInfo: req.session,
+                PPGrank: PPGrank,
+                ASSrank: ASSrank,
+                STLrank: STLrank,
+                REBrank: REBrank,
+                MINrank: MINrank,
+                THREErank: THREErank,
+                nameArray: array,
+                total_points: total_points,
+                assists: assists,
+                steals: steals,
+                rebounds: rebounds,
+                minutes: minutes,
+                three_points: three_points,
+                id: playerId,
+                news: news,
+                compPPGrank: compPPGrank,
+                compASSrank: compASSrank,
+                compSTLrank: compSTLrank,
+                compREBrank: compREBrank,
+                compMINrank: compMINrank,
+                compTHREErank: compTHREErank,
+                comptotal_points: comptotal_points,
+                compassists: compassists,
+                compsteals: compsteals,
+                comprebounds: comprebounds,
+                compminutes: compminutes,
+                compthree_points: compthree_points,
+                compName: compName,
+                userFaves: userFaves
+            });
             });
           });
         });
