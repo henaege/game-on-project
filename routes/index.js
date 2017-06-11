@@ -233,14 +233,14 @@ router.get('/user', (req, res)=>{
 
               for (let i = 0; i < results.length; i++) { 
                 userFaves.push(results[i].player_full_name);
-              };
+              }
               var sessionInfo = req.session;
               res.render('user-page', {
                 photoUrl: photoUrl,
                 teamName: teamName,
                 position: position,
                 fullName: fullName,
-                sessionInfo: req.session,
+                sessionInfo: sessionInfo,
                 total_points: total_points,
                 assists: assists,
                 steals: steals,
@@ -357,40 +357,54 @@ router.post('/user', (req, res)=>{
             var compminutes = Math.round(results[1].minutes * 100) / 100;
             var compthree_points = results[1].three_points;
 
+              var userFaves = [];
+              var faveQuery = `SELECT CONCAT(player_info.first_name, ' ',
+                          player_info.last_name)
+                          AS player_full_name
+                         FROM player_info
+                         INNER JOIN fav_player ON player_info.id = fav_player.player_id;`;
+              connection.query(faveQuery, (error, results)=> {
+
+                  for (let i = 0; i < results.length; i++) {
+                      userFaves.push(results[i].player_full_name);
+                  }
+
             res.render('user-page', {
-              photoUrl: photoUrl, 
-              teamName: teamName, 
-              position: position,
-              fullName: fullName,
-              sessionInfo: req.session,
-              PPGrank: PPGrank,
-              ASSrank: ASSrank,
-              STLrank: STLrank,
-              REBrank: REBrank,
-              MINrank: MINrank,
-              THREErank: THREErank,
-              nameArray: array,
-              total_points: total_points,
-              assists: assists,
-              steals: steals,
-              rebounds: rebounds,
-              minutes: minutes,
-              three_points: three_points,
-              id: playerId,
-              news: news,
-              compPPGrank: compPPGrank,
-              compASSrank: compASSrank,
-              compSTLrank: compSTLrank,
-              compREBrank: compREBrank,
-              compMINrank: compMINrank,
-              compTHREErank: compTHREErank,
-              comptotal_points: comptotal_points,
-              compassists: compassists,
-              compsteals: compsteals,
-              comprebounds: comprebounds,
-              compminutes: compminutes,
-              compthree_points: compthree_points,
-              compName: compName
+                photoUrl: photoUrl,
+                teamName: teamName,
+                position: position,
+                fullName: fullName,
+                sessionInfo: req.session,
+                PPGrank: PPGrank,
+                ASSrank: ASSrank,
+                STLrank: STLrank,
+                REBrank: REBrank,
+                MINrank: MINrank,
+                THREErank: THREErank,
+                nameArray: array,
+                total_points: total_points,
+                assists: assists,
+                steals: steals,
+                rebounds: rebounds,
+                minutes: minutes,
+                three_points: three_points,
+                id: playerId,
+                news: news,
+                compPPGrank: compPPGrank,
+                compASSrank: compASSrank,
+                compSTLrank: compSTLrank,
+                compREBrank: compREBrank,
+                compMINrank: compMINrank,
+                compTHREErank: compTHREErank,
+                comptotal_points: comptotal_points,
+                compassists: compassists,
+                compsteals: compsteals,
+                comprebounds: comprebounds,
+                compminutes: compminutes,
+                compthree_points: compthree_points,
+                compName: compName,
+                userFaves: userFaves
+            });
             });
           });
         });
