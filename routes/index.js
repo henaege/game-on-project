@@ -227,7 +227,7 @@ router.get('/user', (req, res)=>{
 
 /////////////////////
 
-router.post('/user', (req, res)=>{,
+router.post('/user', (req, res)=>{
   var fullName = req.body.search;
   var nameArray = req.body.search.split(' ');
   var playerId;
