@@ -27,6 +27,13 @@ html
 				var MINrank = "#{MINrank}";
 				var THREErank = "#{THREErank}";
 				var id = "#{id}";
+				var compPPGrank = "#{compPPGrank}";
+				var compASSrank = "#{compASSrank}";
+				var compSTLrank = "#{compSTLrank}";
+				var compREBrank = "#{compREBrank}";
+				var compMINrank = "#{compMINrank}";
+				var compTHREErank = "#{compTHREErank}";
+				var compName = "#{compName}";
 			}
 			var registered = "#{sessionInfo.registered}";
 			var user = "#{sessionInfo.username}";
@@ -83,10 +90,16 @@ html
 			div.row
 				div.option-panel-container.col-sm-3
 					div.option-panel 
-						h3 Search
+						h3 Stats
 						div.search-bar
 							form.form-group(action="/user" method="post")
 								input#search-input(type="text", placeholder="Search", name="search")
+								h5 Compare To:
+								select#compare-to
+									option(value="League Average") League Average
+									option(value="League Best") League Best
+									option(value="Another Player") Another Player
+								input#compare-search-input(type="text", placeholder="Search", name="compare" value="League Average")
 								button(type="submit") Submit
 								div.pic
 									-if("#{photoUrl}" != undefined)
@@ -124,6 +137,13 @@ html
 									td #{rebounds}
 									td #{three_points}
 									td #{minutes}
+								tr
+									td #{comptotal_points}
+									td #{compassists}
+									td #{compsteals}
+									td #{comprebounds}
+									td #{compthree_points}
+									td #{compminutes}
 
 				div.news-container.col-sm-2
 					h3 News

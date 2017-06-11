@@ -36,7 +36,37 @@ $(document).ready(function(){
         });
     });
 
-    console.log(typeof(PPGrank));
+
+    $("#compare-search-input").focus(function(){
+        console.log(nameSource);
+        $("#compare-search-input").autocomplete({
+            minLength: 2,
+            source: function( request, response ) {
+                var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+                response( $.grep( nameSource, function( item ){
+                    return matcher.test( item );
+                }) );
+            }
+        });
+    });
+
+    $("#compare-to").change(function () {
+        if($(this).val() == "Another Player"){
+            $('#compare-search-input').val(undefined);
+            $('#compare-search-input').css('display', 'block');
+
+        }else if($(this).val() == "League Best"){
+            $('#compare-search-input').val('League Best');
+            $('#compare-search-input').css('display', 'none')
+        }else{
+            $('#compare-search-input').val('League Average');
+            $('#compare-search-input').css('display', 'none')
+        }
+
+        console.log($('#compare-to').val())
+    });
+
+    //console.log(typeof(PPGrank));
 	
 Highcharts.chart('charts', {
 
@@ -86,8 +116,8 @@ Highcharts.chart('charts', {
         data: [parseFloat(PPGrank),parseFloat(ASSrank), parseFloat(THREErank), parseFloat(REBrank), parseFloat(STLrank), parseFloat(MINrank)],
         pointPlacement: 'on'
     }, {
-        name: 'Average',
-        data: [50, 50, 50, 50, 50, 50],
+        name: compName,
+        data: [parseFloat(compPPGrank),parseFloat(compASSrank), parseFloat(compTHREErank), parseFloat(compREBrank), parseFloat(compSTLrank), parseFloat(compMINrank)],
         pointPlacement: 'on'
     }]
 
