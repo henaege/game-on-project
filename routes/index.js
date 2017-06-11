@@ -5,6 +5,8 @@ var btoa = require('btoa');
 var bcrypt = require('bcrypt-nodejs');
 var serverInfo = require('../config/config');
 var array = [];
+var request = require('request');
+var newsApiKey = serverInfo.newApiKey;
 /* GET home page. */
 // router.get('/', function(req, res, next) {
 //   res.render('index', { });
@@ -157,98 +159,94 @@ connection.connect();
 
 
 router.get('/user', (req, res)=>{
+  if(req.query.msg == 'loggedin'){
+      bestPlayerIds = req.session.favPlayer;
+      randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*bestPlayerIds.length)].player_id;
+  }else {
+    bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
+    randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
+  }
+  var news = []
+    var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
+    connection.query(selectQuery, (error, results)=>{
+      if(error) throw error;
+      var photoUrl = results[0].photo;
+      var teamName = results[0].team;
+      var position = results[0].position;
+      var firstName = results[0].first_name;
+      var lastName = results[0].last_name;
+      var fullName = firstName + ' ' + lastName;
+      var newsUrl = `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${fullName}&page=2&sort=newest&api-key=${newsApiKey}`;
+      request.get(newsUrl, (err, response, newsData)=>{
+        var newsData = JSON.parse(newsData);
+        if (err) throw err;
+        for (let i = 0; i < newsData.response.docs.length; i ++){
+          news.push([newsData.response.docs[i].headline.main, newsData.response.docs[i].web_url]);
+        }
+      var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank,total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE id = ${randomGoodPlayer};`;
 
-  bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
-  randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
-  console.log(randomGoodPlayer);
-  sessionInfo = req.session;
-  var newsApiKey = sessionInfo.newsApiKey;
-  var newsUrl = 'https://newsapi.org/v1/articles'
-  
-  // var usernameQuery = 
-  
+        connection.query(rankQuery, (error, results)=> {
+          console.log(results[0]);
+          var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
+          var ASSrank = Math.round((results[0].ASSrank/517)*10000)/100;
+          var STLrank = Math.round((results[0].STLrank/517)*10000)/100;
+          var REBrank = Math.round((results[0].REBrank/517)*10000)/100;
+          var MINrank = Math.round((results[0].MINrank/517)*10000)/100;
+          var THREErank = Math.round((results[0].THREErank/517)*10000)/100;
+          var total_points = results[0].total_points;
+          var assists = results[0].assists;
+          var steals = results[0].steals;
+          var rebounds = results[0].rebounds;
+          var minutes = Math.round(results[0].minutes * 100) / 100;
+          var three_points = results[0].three_points;
+          array = [];
+          var nameQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
+          connection.query(nameQuery, (error, results)=>{
+            if(error) throw error;
+              for (let i = 0; i < results.length; i++){
+                array.push(results[i].full_name);
+              }
+              var userFaves = [];
+              var faveQuery = `SELECT CONCAT(player_info.first_name, ' ',
+                          player_info.last_name)
+                          AS player_full_name
+                         FROM player_info
+                         INNER JOIN fav_player ON player_info.id = fav_player.player_id;`;
+            connection.query(faveQuery, (error, results)=> {
 
-  var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE id = ${randomGoodPlayer};`;
-  connection.query(selectQuery, (error, results)=>{
-    if(error) throw error;
-    var photoUrl = results[0].photo;
-    var teamName = results[0].team;
-    var position = results[0].position;
-    var firstName = results[0].first_name;
-    var lastName = results[0].last_name;
-    var fullName = firstName + ' ' + lastName;
-
-    var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank,total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE id = ${randomGoodPlayer};`;
-
-    connection.query(rankQuery, (error, results)=> {
-      console.log(results[0]);
-      var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
-      var ASSrank = Math.round((results[0].ASSrank/517)*10000)/100;
-      var STLrank = Math.round((results[0].STLrank/517)*10000)/100;
-      var REBrank = Math.round((results[0].REBrank/517)*10000)/100;
-      var MINrank = Math.round((results[0].MINrank/517)*10000)/100;
-      var THREErank = Math.round((results[0].THREErank/517)*10000)/100;
-      var total_points = results[0].total_points;
-      var assists = results[0].assists;
-      var steals = results[0].steals;
-      var rebounds = results[0].rebounds;
-      var minutes = Math.round(results[0].minutes * 100) / 100;
-      var three_points = results[0].three_points;
-        array = [];
-        var nameQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
-        connection.query(nameQuery, (error, results)=>{
-          if(error) throw error;
-          for (let i = 0; i < results.length; i++){
-              array.push(results[i].full_name);
-          }
-      var userFaves = [];
-      var userEmail = req.session.email;
-      var faveQuery = `SELECT 
-                        CONCAT(player_info.first_name,' ',
-                        player_info.last_name)
-                        AS player_full_name
-                       FROM player_info
-                       WHERE id = (SELECT player_id FROM fav_player WHERE user_email = ${userEmail});`
-      connection.query(faveQuery, (error, results)=> {
-        for (let i = 0; i < results.length; i++) {
-          
-          userFaves.push(results[i].player_full_name);
-        };
-        console.log(userFaves);
-        var sessionInfo = req.session;
-        console.log(sessionInfo);
-        
-        
-          res.render('user-page', {
-            photoUrl: photoUrl,
-            teamName: teamName,
-            position: position,
-            fullName: fullName,
-            sessionInfo: req.session,
-            total_points: total_points,
-            assists: assists,
-            steals: steals,
-            rebounds: rebounds,
-            minutes: minutes,
-            three_points: three_points,
-            PPGrank: PPGrank,
-            ASSrank: ASSrank,
-            STLrank: STLrank,
-            REBrank: REBrank,
-            MINrank: MINrank,
-            THREErank: THREErank,
-            nameArray: array,
-            id: randomGoodPlayer,
-            userFaves: userFaves
+              for (let i = 0; i < results.length; i++) { 
+                userFaves.push(results[i].player_full_name);
+              };
+              var sessionInfo = req.session;
+              res.render('user-page', {
+                photoUrl: photoUrl,
+                teamName: teamName,
+                position: position,
+                fullName: fullName,
+                sessionInfo: req.session,
+                total_points: total_points,
+                assists: assists,
+                steals: steals,
+                rebounds: rebounds,
+                minutes: minutes,
+                three_points: three_points,
+                PPGrank: PPGrank,
+                ASSrank: ASSrank,
+                STLrank: STLrank,
+                REBrank: REBrank,
+                MINrank: MINrank,
+                THREErank: THREErank,
+                nameArray: array,
+                id: randomGoodPlayer,
+                userFaves: userFaves,
+                news:news
+              });
             });
-            });
+          });
+        });
       });
-
-      
-
     });
   });
-});
 
 
 /////////////////////
@@ -268,58 +266,70 @@ router.post('/user', (req, res)=>{
   var fullName = req.body.search;
   var nameArray = req.body.search.split(' ');
   var playerId;
+  var news = [];
+  var newsUrl = `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${fullName}&page=2&sort=newest&api-key=${newsApiKey}`;
   var idQuery = `SELECT id FROM player_info WHERE first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}';`;
-  connection.query(idQuery,(error, results)=> {
-    if (error) throw error;
-    playerId = results[0].id;
-    // console.log(typeof(playerId));
-    var selectQuery = `SELECT photo, team, position FROM player_info WHERE id = ${playerId};`
-    connection.query(selectQuery, (error, results)=>{
-      if(error) throw error;
-      var photoUrl = results[0].photo;
-      var teamName = results[0].team;
-      var position = results[0].position;
-      
-      var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank, total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE id = ${playerId};`;
+  request.get(newsUrl, (err, response, newsData)=>{
+    var newsData = JSON.parse(newsData);
+    if (err) throw err;
+    for (let i = 0; i < newsData.response.docs.length; i ++){
+      news.push([newsData.response.docs[i].headline.main, newsData.response.docs[i].web_url]);
+    }
+    // console.log(news);
+    connection.query(idQuery,(error, results)=> {
+      if (error) throw error;
+      playerId = results[0].id;
+      // console.log(typeof(playerId));
+      var selectQuery = `SELECT photo, team, position FROM player_info WHERE id = ${playerId};`;
 
-    connection.query(rankQuery, (error, results)=> {
-      var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
-      var ASSrank = Math.round((results[0].ASSrank/517)*10000)/100;
-      var STLrank = Math.round((results[0].STLrank/517)*10000)/100;
-      var REBrank = Math.round((results[0].REBrank/517)*10000)/100;
-      var MINrank = Math.round((results[0].MINrank/517)*10000)/100;
-      var THREErank = Math.round((results[0].THREErank/517)*10000)/100;
-      var total_points = results[0].total_points;
-      var assists = results[0].assists;
-      var steals = results[0].steals;
-      var rebounds = results[0].rebounds;
-      var minutes = Math.round(results[0].minutes * 100) / 100;
-      var three_points = results[0].three_points;
-      res.render('user-page', {
-          photoUrl: photoUrl, 
-          teamName: teamName, 
-          position: position,
-          fullName: fullName,
-          sessionInfo: req.session,
-          PPGrank: PPGrank,
-          ASSrank: ASSrank,
-          STLrank: STLrank,
-          REBrank: REBrank,
-          MINrank: MINrank,
-          THREErank: THREErank,
-          nameArray: array,
-          total_points: total_points,
-          assists: assists,
-          steals: steals,
-          rebounds: rebounds,
-          minutes: minutes,
-          three_points: three_points,
-          id: playerId,
+        connection.query(selectQuery, (error, results)=>{
+          if(error) throw error;
+          var photoUrl = results[0].photo;
+          var teamName = results[0].team;
+          var position = results[0].position;
+          
+          var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank, total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE id = ${playerId};`;
+
+          connection.query(rankQuery, (error, results)=> {
+            var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
+            var ASSrank = Math.round((results[0].ASSrank/517)*10000)/100;
+            var STLrank = Math.round((results[0].STLrank/517)*10000)/100;
+            var REBrank = Math.round((results[0].REBrank/517)*10000)/100;
+            var MINrank = Math.round((results[0].MINrank/517)*10000)/100;
+            var THREErank = Math.round((results[0].THREErank/517)*10000)/100;
+            var total_points = results[0].total_points;
+            var assists = results[0].assists;
+            var steals = results[0].steals;
+            var rebounds = results[0].rebounds;
+            var minutes = Math.round(results[0].minutes * 100) / 100;
+            var three_points = results[0].three_points;
+            res.render('user-page', {
+              photoUrl: photoUrl, 
+              teamName: teamName, 
+              position: position,
+              fullName: fullName,
+              sessionInfo: req.session,
+              PPGrank: PPGrank,
+              ASSrank: ASSrank,
+              STLrank: STLrank,
+              REBrank: REBrank,
+              MINrank: MINrank,
+              THREErank: THREErank,
+              nameArray: array,
+              total_points: total_points,
+              assists: assists,
+              steals: steals,
+              rebounds: rebounds,
+              minutes: minutes,
+              three_points: three_points,
+              id: playerId,
+              news: news
+            });
+          });
         });
       });
     });
   });
-});
 
   router.post("/signUp", (req, res)=>{
 
@@ -358,10 +368,16 @@ router.post('/user', (req, res)=>{
         if (results.length == 1){
             var match = bcrypt.compareSync(password, results[0].password);
             if (match){
-              req.session.email = email;
-              req.session.loggedin = true;
-              req.session.username = results[0].username;
-              res.redirect('/user?msg=loggedin');
+              var username = results[0].username;
+              var favPlayerIdQuery = `SELECT player_id FROM fav_player WHERE user_email = '${email}';`;
+              connection.query(favPlayerIdQuery, (error, results)=>{
+                if (error) throw error;
+                req.session.email = email;
+                req.session.favPlayer = results;
+                req.session.loggedin = true;
+                req.session.username = username;
+                res.redirect('/user?msg=loggedin');
+              });
           } else {
           res.redirect('/?msg=invalid')
           }
