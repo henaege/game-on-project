@@ -13,17 +13,56 @@ img {
   margin-left: -15px;
 }
 h1{
-    font-family: 'Squada One', sans-serif;    
+  font-family: 'Squada One', sans-serif;    
   text-align: center;
-    color: white;
-    padding-top: 330px;
-    font-size: 80px;  
+  color: white;
+  padding-top: 330px;
+  font-size: 80px;  
   text-shadow: 2px 3px black;
+}
+
+#game{
+   animation: connect 2s 1;
+    position: relative;
+    animation-timing-function: ease-in-out;
+    animation-delay: 200ms;
+}
+
+@keyframes connect {
+  0%   {left: -900px;}
+  30%  {left: 0;}
+  60% {left: 0;}
+  80% {left: 0px;}
+  100% {left: 0;}
+}
+
+#on{
+  animation: on 2s 1;
+    position: relative;
+    animation-timing-function: ease-in-out;
+    animation-delay: 200ms;
+}
+
+@keyframes on {
+  0%   {right: -700px;}
+  30%  {right: -700px;}
+  60%  {right: 0;}
+  80%  {right: 0px;}
+  100% {right: 0px;}
 }
 
 h3{
     font-family: Verdana, sans-serif;
     text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+    color: #fac51c ;
+}
+
+#experience{
+    font-family: Verdana, sans-serif;
+    text-align: center;
+    text-shadow: 1px 1px black;
     font-size: 25px;
     font-weight: 600;
     color: #fac51c ;
@@ -35,12 +74,13 @@ p, h5 {
 
 .log-in{
     font-size: 20px;
-    color: #1058b7 ;
+    color: #fac51c ;    
     border: none;
     border-radius: 50%;
     background-color: transparent;
     float: right;
     margin-bottom: 5px;
+    text-shadow: .5px .5px black;
 }
 
 .settings-button {
@@ -68,8 +108,16 @@ p, h5 {
     opacity: 0.5;
 }
 
+#start-btn{
+  background-color: rgba(35, 35, 35, .6);
+  font-size: 23px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 1px 2px black;
+  border: 1px solid black;
+}
 #start-btn:focus{
-  outline: none; 
+  outline: none;   
 }
 
 .begin-container{
@@ -187,6 +235,8 @@ select {
 
 #compare-search-input{
     display: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #submit{
@@ -205,6 +255,10 @@ select {
 .table{
   color: #D75F57 ;
 
+}
+
+tr{
+  text-align: center;
 }
 
 .modal-content {
@@ -241,6 +295,7 @@ select {
   border: none;
   border-radius: 0;
   font-size: 18px;
+  margin-left: 15px;
 }
 
 .save-btn:hover {
@@ -255,4 +310,31 @@ select {
   border-radius: 0;
   font-size: 18px;
   margin-right: 15px;
+}
+
+#nav-header{
+  font-family: 'Squada One', sans-serif;    
+  color: white;
+  font-size: 33px;  
+  text-shadow: 2px 3px black;
+  float: left;
+  margin-top: 5px;
+}
+.about{
+    font-family: Verdana, sans-serif; 
+    font-size: 16px;
+    background: transparent;
+    text-shadow: 1px 1px black;
+    /* background-color: rgba(35, 35, 35, .5); */
+    color: white ;
+    margin-top: 20px;
+    border: solid 1px black;
+}
+
+#button-tag{
+    font-family: 'Squada One', sans-serif;    
+  text-align: center;
+    color: white;
+    font-size: 25px;  
+  text-shadow: 2px 2px black;
 }
