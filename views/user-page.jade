@@ -84,7 +84,7 @@ html
 			div.row
 				div.nav-bar-container
 					div.col-sm-12.nav-bar
-						button.btn.btn-success(type="button"  data-toggle="modal" data-target="#accountSetting" ) Setting
+						button.btn.btn-success(type="button"  data-toggle="modal" data-target="#accountSetting" ) Settings
 						h3 Nav Bar
 
 			div.row
@@ -100,7 +100,7 @@ html
 									option(value="League Best") League Best
 									option(value="Another Player") Another Player
 								input#compare-search-input(type="text", placeholder="Search", name="compare" value="League Average")
-								button(type="submit") Submit
+								button#submit(type="submit") Submit
 								div.pic
 									-if("#{photoUrl}" != undefined)
 										img(src="#{photoUrl}")
@@ -113,7 +113,7 @@ html
 										li Position: #{position}
 								form.favorite-form(action="/add_fav" method="post")		
 									input#fav-input(type="hidden",name="favorite" value="#{id}") 
-									button(type="submit") Add Player
+									button#add-player(type="submit") Add Player
 								
 
 				div.charts-container.col-sm-7
