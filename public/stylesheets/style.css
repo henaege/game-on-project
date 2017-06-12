@@ -1,6 +1,8 @@
 body {
   font: 14px Verdana, Helvetica, Arial, sans-serif;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -81,6 +83,11 @@ p, h5 {
     float: right;
     margin-bottom: 5px;
     text-shadow: .5px .5px black;
+}
+
+.main-content-container {
+  width: 100vw;
+  padding: 0;
 }
 
 .sign-up-form-container, .login-form-container {
