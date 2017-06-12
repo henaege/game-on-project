@@ -16,9 +16,9 @@ $(document).ready(function(){
 		$('.first-section').fadeOut(1000,complete);					
 		$('#wrapper_bgndVideo').css('filter','blur(10px)');
     });
-    if(registered){
-        $('#accountSetting').modal('show');  
-    }
+    // if(registered){
+    //     $('#accountSetting').modal('show');
+    // }
 	var nameSource = availableTags.split(",");
 	nameSource = nameSource.slice(0, -2);
     $("#search-input").focus(function(){

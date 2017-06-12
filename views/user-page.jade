@@ -125,9 +125,9 @@ html
 					div#charts(style="width:100%; height:400px;") 
 					div#stats-table.text-center 
 						table.table
-							h4 Player Stats Per Game
+							h4#table-title Player Stats Per Game
 							thead
-								tr 
+								tr#table-lables
 									th Points
 									th Assists
 									th Steals
@@ -135,14 +135,14 @@ html
 									th 3 Points
 									th Min Played
 							tbody
-								tr 
+								tr#first-player
 									td #{total_points}
 									td #{assists}
 									td #{steals}
 									td #{rebounds}
 									td #{three_points}
 									td #{minutes}
-								tr
+								tr#second-player
 									td #{comptotal_points}
 									td #{compassists}
 									td #{compsteals}
