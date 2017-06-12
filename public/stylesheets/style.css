@@ -8,8 +8,9 @@ a {
 }
 
 img {
-  width: 100%;
+  width: auto;
   height:  100%;
+  margin-left: -15px;
 }
 h1{
     font-family: 'Squada One', sans-serif;    
@@ -28,7 +29,7 @@ h3{
     color: #fac51c ;
 }
 
-p {
+p, h5 {
   font-size: 18px;
 }
 
@@ -138,7 +139,10 @@ label {
 .pic {
   margin-top: 10px;
   border: 1px solid white;
-  background-color: #bbbcbf ;
+  background-color: #bbbcbf;
+  width: auto;
+  height: 210px;
+  overflow: hidden;
 
 }
 
