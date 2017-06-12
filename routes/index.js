@@ -230,7 +230,7 @@ router.get('/user', (req, res)=>{
                           player_info.last_name)
                           AS player_full_name
                          FROM player_info
-                         INNER JOIN fav_player ON player_info.id = fav_player.player_id;`;
+                         INNER JOIN fav_player ON player_info.id = fav_player.player_id WHERE user_email = '${req.session.email}';`;
             connection.query(faveQuery, (error, results)=> {
 
               for (let i = 0; i < results.length; i++) { 
