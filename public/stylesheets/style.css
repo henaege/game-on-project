@@ -252,3 +252,11 @@ select {
   font-size: 18px;
   margin-right: 15px;
 }
+
+/*path .highcharts-halo, .highcharts-color-0, .highcharts-series-0, .highcharts-line-series {
+  fill: rgb(144, 238, 126) !important; 
+}
+
+.highcharts-series-1, .highcharts-color-1, .highcharts-line-series {
+  stroke: rgb(43, 144, 143);
+}*/
