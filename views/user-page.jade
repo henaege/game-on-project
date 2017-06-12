@@ -94,8 +94,9 @@ html
 					div.option-panel.col-sm-12
 						h3 Stats
 						div.search-bar
-							form.form-group(action="/user" method="post")
+							form.form-group#search-form(action="/user" method="post")
 								input#search-input(type="text", placeholder="Search", name="search" value="#{fullName}")
+								p.message
 								h5 Compare To:
 								select#compare-to
 									option(value="League Average") League Average

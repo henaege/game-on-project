@@ -25,6 +25,7 @@ $(document).ready(function(){
         $("#search-input").attr("value", "");
         $("#search-input").autocomplete({
     	    minLength: 2,
+            autoFocus: true,
             source: function( request, response ) {
             var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
             response( $.grep( nameSource, function( item ){
@@ -34,6 +35,19 @@ $(document).ready(function(){
         });
     });
 
+    $(".compare-btn").click((e)=>{
+        var userInputFromSearch = $('#search-input').val();
+        console.log(userInputFromSearch);
+        var userInputFromCompare = $('#compare-search-input').val();
+        console.log(userInputFromCompare);
+        if((nameSource.indexOf(userInputFromSearch) == -1) ||   ((nameSource.indexOf(userInputFromCompare) == -1) && (userInputFromCompare != 'League Average') && (userInputFromCompare != 'League Best'))){
+            e.preventDefault();
+            $(".message").html("Please enter a real NBA player's name!")
+        }else {
+            $(".message").html("");
+            e.invokeDefault();
+        }
+    });
 
     $("#compare-search-input").focus(function(){
         console.log(nameSource);
