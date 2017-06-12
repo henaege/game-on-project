@@ -83,6 +83,28 @@ p, h5 {
     text-shadow: .5px .5px black;
 }
 
+.sign-up-form-container, .login-form-container {
+  margin-top: 320px;
+  padding: 0;
+}
+
+.signupform, .login-form {
+  float: right;
+}
+
+.index-input {
+  background-color: #dcdcdc;
+  color: #666666;
+  border: none;
+  font-size: 18px;
+}
+
+.index-label  {
+  color: #dcdcdc;
+  text-shadow: 1px 2px black;
+  font-size: 18px;
+}
+
 .settings-button {
   border: none;
     border-radius: 50%;
@@ -195,7 +217,7 @@ label {
 }
 
 input {
-  background-color: #666666;
+  background-color: #777777;
   color: #dcdcdc;
   border: none;
   font-size: 18px;
