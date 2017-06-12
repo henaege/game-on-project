@@ -292,7 +292,7 @@ Highcharts.chart('charts', {
 
     title: {
         text: 'Player Ranking',
-        x: -80
+        x: -0
     },
 
     pane: {
@@ -320,7 +320,7 @@ Highcharts.chart('charts', {
     },
 
     legend: {
-        align: 'right',
+        align: 'bottom',
         verticalAlign: 'top',
         y: 70,
         layout: 'vertical'
