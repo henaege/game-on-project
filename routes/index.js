@@ -477,5 +477,13 @@ router.post('/user', (req, res)=>{
           res.redirect('/user?msg=deleted');
       });
     });
-
+    router.post('/changeUsername', (req,res)=>{
+      var newUsername = req.body.newUsername;
+      var updateQuery = `UPDATE users SET username='${newUsername}' WHERE email='${req.session.email}';`;
+      connection.query(updateQuery, (error, results)=>{
+        if(error) throw error;
+        req.session.username = newUsername;
+        res.redirect('/user?msg=changedUsername');
+      });
+    });
 module.exports = router;

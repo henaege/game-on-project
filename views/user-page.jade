@@ -48,17 +48,19 @@ html
 							h4.modal-title#gridSystemModalLabel Welcome, #{sessionInfo.username}
 						div.modal-body
 							div.row
-								div.col-sm-12.text-center
-								table.table
-									thead
-									tr
-										th.text-center Your User Name
-										th.text-center Action
-									tbody
-										tr.text-center
-										td.text-center.username-row #{sessionInfo.username}
-										td.text-center
-											button.btn.btn-warning.edit-btn Edit
+								div.col-sm-12.text-center.username-form-container
+
+									table.table
+										thead
+										tr
+											th.text-center Your User Name
+											th.text-center Action
+										tbody
+											tr.text-center
+											td.text-center.username-row #{sessionInfo.username}
+											td.text-center
+												button.btn.btn-warning.edit-btn Edit
+												button.btn.btn-primary(type="submit") Save
 									
 							div.row
 								div.col-sm-12.text-center
@@ -78,8 +80,7 @@ html
 							
 											
 						div.modal-footer
-							button.btn.btn-default(type="button" data-dismiss="modal") Cancel
-							button.btn.btn-primary(type="submit") Save changes
+							button.btn.btn-default(type="button" data-dismiss="modal").cancel-btn Cancel
 
 			div.row
 				div.nav-bar-container
