@@ -159,15 +159,13 @@ connection.connect();
 
 
 router.get('/user', (req, res)=>{
-  if(req.query.msg == 'loggedin' || req.query.msg == 'deleted') {
-      if (req.session.fav_player != undefined) {
-          bestPlayerIds = req.session.favPlayer;
-          randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * bestPlayerIds.length)].player_id;
-      } else {
-          bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
-          randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * 14)];
-      }
-  }
+    if (req.session.fav_player != undefined) {
+        bestPlayerIds = req.session.favPlayer;
+        randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * bestPlayerIds.length)].player_id;
+    } else {
+        bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
+        randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * 14)];
+    }
   var news = [];
   var averagePlayerId = 519;
     var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE (id = ${randomGoodPlayer}) OR (id = ${averagePlayerId});`;
@@ -284,6 +282,7 @@ router.get('/user', (req, res)=>{
 router.post('/add_fav', (req,res)=>{
     var fav = req.body.favorite;
     var user_email = req.session.email;
+    req.session.registered = false;
     var favQuery = "INSERT INTO fav_player(user_email, player_id) VALUES (?, ?);";
     connection.query(favQuery,[user_email, fav], (error, results)=>{
         if(error)throw error;
@@ -298,7 +297,7 @@ router.post('/user', (req, res)=>{
   var nameArray = req.body.search.split(' ');
   var compName = req.body.compare;
   var compNameArray = req.body.compare.split(' ');
-
+  req.session.registered = false;
   var compareId;
   var playerId;
 
@@ -426,9 +425,10 @@ router.post('/user', (req, res)=>{
       if (results.length == 0){
         var insertQuery = "INSERT INTO users(username, password, email) VALUES(?,?,?);";
         connection.query(insertQuery, [username, hash, email], (error, results)=> {
-          console.log(username);
           if(error) throw error;
-          // req.session.username = results.username;
+          req.session.username = username;
+          req.session.email = email;
+          req.session.favPlayer = results;
           req.session.loggedin = true;
           req.session.registered = true;
           res.redirect('/user?msg=registered');
@@ -457,6 +457,7 @@ router.post('/user', (req, res)=>{
                 req.session.email = email;
                 req.session.favPlayer = results;
                 req.session.loggedin = true;
+                req.session.registered = false;
                 req.session.username = username;
                 res.redirect('/user?msg=loggedin');
               });

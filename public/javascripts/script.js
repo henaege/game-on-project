@@ -17,7 +17,8 @@ $(document).ready(function(){
 		$('#wrapper_bgndVideo').css('filter','blur(10px)');
     });
     if(registered){
-        $('#accountSetting').modal('show');    
+        $('#accountSetting').modal('show');
+        registered = false;    
     }
 	var nameSource = availableTags.split(",");
 	nameSource = nameSource.slice(0, -2);
