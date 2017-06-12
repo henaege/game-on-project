@@ -159,13 +159,14 @@ connection.connect();
 
 
 router.get('/user', (req, res)=>{
-  if(req.query.msg == 'loggedin' || req.query.msg == 'deleted'){
-    if(req.session.fav_player != undefined){
-      bestPlayerIds = req.session.favPlayer;
-      randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*bestPlayerIds.length)].player_id;
-  }else {
-    bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
-    randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*14)];
+  if(req.query.msg == 'loggedin' || req.query.msg == 'deleted') {
+      if (req.session.fav_player != undefined) {
+          bestPlayerIds = req.session.favPlayer;
+          randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * bestPlayerIds.length)].player_id;
+      } else {
+          bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
+          randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * 14)];
+      }
   }
   var news = [];
   var averagePlayerId = 519;
@@ -278,6 +279,7 @@ router.get('/user', (req, res)=>{
       });
     });
   });
+
 
 
 /////////////////////
