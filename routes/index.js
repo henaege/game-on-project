@@ -1,4 +1,4 @@
-var express = require('express');
+ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var btoa = require('btoa');
@@ -7,148 +7,13 @@ var serverInfo = require('../config/config');
 var array = [];
 var request = require('request');
 var newsApiKey = serverInfo.newApiKey;
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { });
-// });
 
-
-
-
-// router.get('/user', function(req, res, next){
-//   var array = [];
-//   var playerName = req.body.search;
-//   var selectQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
-//   connection.query(selectQuery, (error, results)=>{
-//     if(error) throw error;
-//     for (let i = 0; i < results.length; i++){
-//       array.push(results[i].full_name);
-//     }
-//     // console.log(array);
-//     res.render('user-page', {playersFullName: array, sessionInfo: req.session});
-//   });
-//   // res.render('user-page', { });
-// });
-
-
-// var APIdata;
-/* GET home page. */
+// =====Go to HOME page ====
 router.get('/', function(req, res, next) {
-
-  // APIdata = JSON.parse(APIdata);
-  // console.log(APIdata);
-  // =======================Getting player Stats from the API database======================
-    // var players = APIdata.cumulativeplayerstats.playerstatsentry;
-    // // res.json(players);
-
-    // // console.log(players[0].stats.PtsPerGame['#text']);
-    // for(let i = 0; i < players.length; i++){
-  //      var points = parseFloat(players[i].stats.PtsPerGame['#text']);
-  //      var assists = parseFloat(players[i].stats.AstPerGame['#text']);
-  //      var steals = parseFloat(players[i].stats.StlPerGame['#text']);
-  //      var rebounds = parseFloat(players[i].stats.RebPerGame['#text']);
-  //      var minutes = parseFloat(players[i].stats.MinSecondsPerGame['#text']) / 60;
-  //      var threePoints = parseFloat(players[i].stats.Fg3PtMadePerGame['#text']);
-  //      var insertQuery = `INSERT INTO per_game (total_points, assists, steals, rebounds, minutes, three_points) VALUES ('${points}', '${assists}', '${steals}', '${rebounds}', '${minutes}', '${threePoints}');`;
-  //      connection.query(insertQuery, (error, results)=>{
-  //        if(error) throw error;
-  //      });
-  //    }
-
-  // ===================Getting player information from the API database ===============
-  // var players = APIdata.cumulativeplayerstats.playerstatsentry;
-  // console.log(players[0]);
-  // for(let i = 0; i < players.length; i++){
- //     var first_name = players[i].player.FirstName.match(/[a-zA-z]+/);
- //     var last_name = players[i].player.LastName.match(/[a-zA-z]+/);
- //     var team = players[i].team.Name;
- //     var position = players[i].player.Position;
- //     var insertQuery = `INSERT INTO player_info (first_name, last_name, team, position) VALUES ('${first_name}', '${last_name}', '${team}', '${position}');`;
- //     connection.query(insertQuery, (error, results)=>{
- //       if(error) throw error;
- //     });
- //    }
-   // =============================End of for loop===========================================
-
-  // for(let i = 0; i < APIdata.playerstatsentry.length; i++){
-    // res.render('test', {data: APIdata.cumulativeplayerstats.playerstatsentry[1].player.LastName});
-  // =============================== Getting rank for each per_game data =========================
-  // var array = [];
-  // var playerName = req.body.search;
-  // var selectQuery = "SELECT id FROM per_game ORDER BY three_points ASC;";
-  // connection.query(selectQuery, (error, results)=>{
-  //   if(error) throw error;
-  //   for (let i = 0; i < results.length; i++){
-  //     array.push(results[i].id);
-  //   }
-  //   console.log(array);
-  //   for (let j = 0; j < array.length; j++){
-  //     var rank = j + 1;
-  //     var insertQuery = `UPDATE per_game SET THREErank = ${rank} WHERE id = ${parseInt(array[j])};`;
-  //     connection.query(insertQuery, (error, results)=>{
-  //     if (error) throw error;
-
-  //   });
-  //   }
-// });
-   // ====================================END ======================================================
     res.render('index', {sessionInfo: req.session});
-
-
 });
 
-
-
-// var getData = function(callback) {
-//     'use strict';
-        
-//     const httpTransport = require('https');
-//     const responseEncoding = 'utf8';
-//     const httpOptions = {
-//         hostname: 'www.mysportsfeeds.com',
-//         port: '443',
-//         path: 'https://www.mysportsfeeds.com/api/feed/pull/nba/2016-regular/cumulative_player_stats.json?playerstats=PTS/G,AST/G,STL/G,REB/G,MIN/G,3PM/G',
-//         method: 'GET',
-//         headers: {"Authorization":"Basic " + btoa('henaege' + ":" + 'DigitalCrafts')},
-//     };
-//     httpOptions.headers['User-Agent'] = 'node ' + process.version;
- 
-//     const request = httpTransport.request(httpOptions, (res) => {
-//         let responseBufs = [];
-//         let responseStr = '';
-        
-//         res.on('data', (chunk) => {
-//             if (Buffer.isBuffer(chunk)) {
-//                 responseBufs.push(chunk);
-//             }
-//             else {
-//                 responseStr = responseStr + chunk;            
-//             }
-//         }).on('end', () => {
-//             responseStr = responseBufs.length > 0 ? 
-//                 Buffer.concat(responseBufs).toString(responseEncoding) : responseStr;
-            
-//             callback(null, res.statusCode, res.headers, responseStr);
-//         });
-        
-//     })
-//     .setTimeout(0)
-//     .on('error', (error) => {
-//         callback(error);
-//     });
-//     request.write("")
-//     request.end();
-
-
-// }((error, statusCode, headers, body) => {
-//     console.log('ERROR:', error); 
-//     console.log('STATUS:', statusCode);
-//     console.log('HEADERS:', JSON.stringify(headers));
-//     // console.log(body);
-//     APIdata = JSON.parse(body);
-
-// });
-
+// ===  Connec to local database ====
 var connection = mysql.createConnection({
     host: serverInfo.host,
     user: serverInfo.username,
@@ -157,15 +22,23 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
-
+// === Get request for USER page =====
 router.get('/user', (req, res)=>{
-    if (req.session.fav_player != undefined) {
+
+  // === Condition for deciding which player stats to load ===
+    if(req.session.currentPlayer != undefined){
+      randomGoodPlayer = req.session.currentPlayer;
+      console.log(randomGoodPlayer);
+    }
+    else if (req.session.fav_player != undefined) {
         bestPlayerIds = req.session.favPlayer;
         randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * bestPlayerIds.length)].player_id;
     } else {
         bestPlayerIds = [106, 129, 187, 20, 236, 231, 372, 477, 291, 450, 278, 182, 134, 386];
         randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * 14)];
     }
+  // ==== MySQL Query for getting photos from local database ======
+
   var news = [];
   var averagePlayerId = 519;
     var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE (id = ${randomGoodPlayer}) OR (id = ${averagePlayerId});`;
@@ -179,6 +52,8 @@ router.get('/user', (req, res)=>{
       var fullName = firstName + ' ' + lastName;
       var compName = results[1].first_name + ' ' + results[1].last_name;
 
+      // ==== Making JSON Request for news feed =====
+
       var newsUrl = `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${fullName}&page=2&sort=newest&api-key=${newsApiKey}`;
       request.get(newsUrl, (err, response, newsData)=>{
         var newsData = JSON.parse(newsData);
@@ -186,8 +61,10 @@ router.get('/user', (req, res)=>{
         for (let i = 0; i < newsData.response.docs.length; i ++){
           news.push([newsData.response.docs[i].headline.main, newsData.response.docs[i].web_url]);
         }
-      var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank,total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE (id = ${randomGoodPlayer}) OR (id = ${averagePlayerId});`;
 
+        // === Getting player stats from per_game table ====
+
+        var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank,total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE (id = ${randomGoodPlayer}) OR (id = ${averagePlayerId});`;
         connection.query(rankQuery, (error, results)=> {
           console.log(results[0]);
           var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
@@ -216,6 +93,7 @@ router.get('/user', (req, res)=>{
           var compminutes = Math.round(results[1].minutes * 100) / 100;
           var compthree_points = results[1].three_points;
 
+          // ===== Creating full name array for autocomplete function for the search bar =====
           array = [];
           var nameQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
           connection.query(nameQuery, (error, results)=>{
@@ -223,16 +101,18 @@ router.get('/user', (req, res)=>{
               for (let i = 0; i < results.length; i++){
                 array.push(results[i].full_name);
               }
+
+              // ====== Getting user's favorite players list from fav_player table ====
+
               var userFaves = [];
               var faveQuery = `SELECT CONCAT(player_info.first_name, ' ',
                           player_info.last_name)
                           AS player_full_name
                          FROM player_info
                          INNER JOIN fav_player ON player_info.id = fav_player.player_id WHERE user_email = '${req.session.email}';`;
-            connection.query(faveQuery, (error, results)=> {
-
-              for (let i = 0; i < results.length; i++) { 
-                userFaves.push(results[i].player_full_name);
+              connection.query(faveQuery, (error, results)=> {
+                for (let i = 0; i < results.length; i++) { 
+                  userFaves.push(results[i].player_full_name);
               }
               var sessionInfo = req.session;
               res.render('user-page', {
@@ -278,7 +158,7 @@ router.get('/user', (req, res)=>{
     });
   });
 
-
+// ============= Post request from add favortite players button =========
 router.post('/add_fav', (req,res)=>{
     var fav = req.body.favorite;
     var user_email = req.session.email;
@@ -286,11 +166,14 @@ router.post('/add_fav', (req,res)=>{
     var favQuery = "INSERT INTO fav_player(user_email, player_id) VALUES (?, ?);";
     connection.query(favQuery,[user_email, fav], (error, results)=>{
         if(error)throw error;
-        res.redirect('/user?msg=addedPlayer');
+        req.session.currentPlayer = fav;
+        console.log(fav);
+        res.redirect(`/user?msg=addedFavorite`);
     });
 });
 /////////////////////
 
+// ================= Post request from user page ===========
 
 router.post('/user', (req, res)=>{
   var fullName = req.body.search;
@@ -300,9 +183,6 @@ router.post('/user', (req, res)=>{
   req.session.registered = false;
   var compareId;
   var playerId;
-
-
-
   var news = [];
   var newsUrl = `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${fullName}&page=2&sort=newest&api-key=${newsApiKey}`;
   var idQuery = `SELECT id FROM player_info WHERE (first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}')
@@ -492,4 +372,131 @@ router.post('/user', (req, res)=>{
         res.redirect('/user?msg=changedUsername');
       });
     });
+// ===========Code that used to create our own database from the mysportsfeeds API =======
+// var getData = function(callback) {
+//     'use strict';
+        
+//     const httpTransport = require('https');
+//     const responseEncoding = 'utf8';
+//     const httpOptions = {
+//         hostname: 'www.mysportsfeeds.com',
+//         port: '443',
+//         path: 'https://www.mysportsfeeds.com/api/feed/pull/nba/2016-regular/cumulative_player_stats.json?playerstats=PTS/G,AST/G,STL/G,REB/G,MIN/G,3PM/G',
+//         method: 'GET',
+//         headers: {"Authorization":"Basic " + btoa('henaege' + ":" + 'DigitalCrafts')},
+//     };
+//     httpOptions.headers['User-Agent'] = 'node ' + process.version;
+ 
+//     const request = httpTransport.request(httpOptions, (res) => {
+//         let responseBufs = [];
+//         let responseStr = '';
+        
+//         res.on('data', (chunk) => {
+//             if (Buffer.isBuffer(chunk)) {
+//                 responseBufs.push(chunk);
+//             }
+//             else {
+//                 responseStr = responseStr + chunk;            
+//             }
+//         }).on('end', () => {
+//             responseStr = responseBufs.length > 0 ? 
+//                 Buffer.concat(responseBufs).toString(responseEncoding) : responseStr;
+            
+//             callback(null, res.statusCode, res.headers, responseStr);
+//         });
+        
+//     })
+//     .setTimeout(0)
+//     .on('error', (error) => {
+//         callback(error);
+//     });
+//     request.write("")
+//     request.end();
+
+
+// }((error, statusCode, headers, body) => {
+//     console.log('ERROR:', error); 
+//     console.log('STATUS:', statusCode);
+//     console.log('HEADERS:', JSON.stringify(headers));
+//     // console.log(body);
+//     APIdata = JSON.parse(body);
+
+// });
+// router.get('/user', function(req, res, next){
+//   var array = [];
+//   var playerName = req.body.search;
+//   var selectQuery = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM player_info;";
+//   connection.query(selectQuery, (error, results)=>{
+//     if(error) throw error;
+//     for (let i = 0; i < results.length; i++){
+//       array.push(results[i].full_name);
+//     }
+//     // console.log(array);
+//     res.render('user-page', {playersFullName: array, sessionInfo: req.session});
+//   });
+//   // res.render('user-page', { });
+// });
+
+
+// var APIdata;
+
+
+  // APIdata = JSON.parse(APIdata);
+  // console.log(APIdata);
+  // =======================Getting player Stats from the API database======================
+    // var players = APIdata.cumulativeplayerstats.playerstatsentry;
+    // // res.json(players);
+
+    // // console.log(players[0].stats.PtsPerGame['#text']);
+    // for(let i = 0; i < players.length; i++){
+  //      var points = parseFloat(players[i].stats.PtsPerGame['#text']);
+  //      var assists = parseFloat(players[i].stats.AstPerGame['#text']);
+  //      var steals = parseFloat(players[i].stats.StlPerGame['#text']);
+  //      var rebounds = parseFloat(players[i].stats.RebPerGame['#text']);
+  //      var minutes = parseFloat(players[i].stats.MinSecondsPerGame['#text']) / 60;
+  //      var threePoints = parseFloat(players[i].stats.Fg3PtMadePerGame['#text']);
+  //      var insertQuery = `INSERT INTO per_game (total_points, assists, steals, rebounds, minutes, three_points) VALUES ('${points}', '${assists}', '${steals}', '${rebounds}', '${minutes}', '${threePoints}');`;
+  //      connection.query(insertQuery, (error, results)=>{
+  //        if(error) throw error;
+  //      });
+  //    }
+
+  // ===================Getting player information from the API database ===============
+  // var players = APIdata.cumulativeplayerstats.playerstatsentry;
+  // console.log(players[0]);
+  // for(let i = 0; i < players.length; i++){
+ //     var first_name = players[i].player.FirstName.match(/[a-zA-z]+/);
+ //     var last_name = players[i].player.LastName.match(/[a-zA-z]+/);
+ //     var team = players[i].team.Name;
+ //     var position = players[i].player.Position;
+ //     var insertQuery = `INSERT INTO player_info (first_name, last_name, team, position) VALUES ('${first_name}', '${last_name}', '${team}', '${position}');`;
+ //     connection.query(insertQuery, (error, results)=>{
+ //       if(error) throw error;
+ //     });
+ //    }
+   // =============================End of for loop===========================================
+
+  // for(let i = 0; i < APIdata.playerstatsentry.length; i++){
+    // res.render('test', {data: APIdata.cumulativeplayerstats.playerstatsentry[1].player.LastName});
+  // =============================== Getting rank for each per_game data =========================
+  // var array = [];
+  // var playerName = req.body.search;
+  // var selectQuery = "SELECT id FROM per_game ORDER BY three_points ASC;";
+  // connection.query(selectQuery, (error, results)=>{
+  //   if(error) throw error;
+  //   for (let i = 0; i < results.length; i++){
+  //     array.push(results[i].id);
+  //   }
+  //   console.log(array);
+  //   for (let j = 0; j < array.length; j++){
+  //     var rank = j + 1;
+  //     var insertQuery = `UPDATE per_game SET THREErank = ${rank} WHERE id = ${parseInt(array[j])};`;
+  //     connection.query(insertQuery, (error, results)=>{
+  //     if (error) throw error;
+
+  //   });
+  //   }
+// });
+   // ====================================END ======================================================
+
 module.exports = router;
