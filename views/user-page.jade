@@ -45,20 +45,21 @@ html
 					div.modal-content
 						div.modal-header
 							button.close(type="button" data-dismiss="modal" aria-label="Close")
-							h4.modal-title#gridSystemModalLabel Welcome, #{sessionInfo.userName}
+							h4.modal-title#gridSystemModalLabel Welcome, #{sessionInfo.username}
 						div.modal-body
 							div.row
-								div.col-sm-12.text-center
-								table.table.modal-table.table-hover
-									thead
-									tr
-										th.text-center Your User Name
-										th.text-center Action
-									tbody
-										tr.text-center
-										td.text-center.username-row #{sessionInfo.userName}
-										td.text-center
-											button.edit-btn Edit
+								div.col-sm-12.text-center.username-form-container
+									table.table.modal-table.table-hover
+										thead
+										tr
+											th.text-center Your User Name
+											th.text-center Action
+										tbody
+											tr.text-center
+											td.text-center.username-row #{sessionInfo.username}
+											td.text-center
+												button.edit-btn Edit
+												button.save-btn(type="submit") Save Changes
 									
 							div.row
 								div.col-sm-12.text-center
@@ -79,7 +80,6 @@ html
 											
 						div.modal-footer
 							button.cancel-btn(type="button" data-dismiss="modal") Cancel
-							button.save-btn(type="submit") Save Changes
 
 			div.row
 				div.nav-bar-container
