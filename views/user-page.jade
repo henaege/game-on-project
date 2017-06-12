@@ -48,21 +48,22 @@ html
 							h4.modal-title#gridSystemModalLabel Welcome, #{sessionInfo.username}
 						div.modal-body
 							div.row
-								div.col-sm-12.text-center
-								table.table
-									thead
-									tr
-										th.text-center Your User Name
-										th.text-center Action
-									tbody
-										tr.text-center
-										td.text-center #{sessionInfo.username}
-										td.text-center
-											button.btn.btn-warning Edit
+								div.col-sm-12.text-center.username-form-container
+									table.table.modal-table.table-hover
+										thead
+										tr
+											th.text-center Your User Name
+											th.text-center Action
+										tbody
+											tr.text-center
+											td.text-center.username-row #{sessionInfo.username}
+											td.text-center
+												button.edit-btn Edit
+												button.save-btn(type="submit") Save Changes
 									
 							div.row
 								div.col-sm-12.text-center
-								table.table
+								table.table.modal-table.table-hover
 									thead
 									tr
 										th.text-center Player
@@ -73,34 +74,32 @@ html
 											tr.text-center
 												td.text-center= val
 												td.text-center
-													a(href="/delete/#{val.id}")
-													button.btn.btn-danger Remove
+													a(href="/delete/#{id}")
+														button.remove-btn Remove
 							
 											
 						div.modal-footer
-							button.btn.btn-default(type="button" data-dismiss="modal") Cancel
-							button.btn.btn-primary(type="submit") Save changes
+							button.cancel-btn(type="button" data-dismiss="modal") Cancel
 
 			div.row
 				div.nav-bar-container
 					div.col-sm-12.nav-bar
-						button.btn.btn-success(type="button"  data-toggle="modal" data-target="#accountSetting" ) Settings
-						h3 Nav Bar
+						button.btn.settings-button(type="button"  data-toggle="modal" data-target="#accountSetting" ) Settings
 
 			div.row
 				div.option-panel-container.col-sm-3
-					div.option-panel 
+					div.option-panel.col-sm-12
 						h3 Stats
 						div.search-bar
 							form.form-group(action="/user" method="post")
-								input#search-input(type="text", placeholder="Search", name="search")
+								input#search-input(type="text", placeholder="Search", name="search" value="#{fullName}")
 								h5 Compare To:
 								select#compare-to
 									option(value="League Average") League Average
 									option(value="League Best") League Best
 									option(value="Another Player") Another Player
 								input#compare-search-input(type="text", placeholder="Search", name="compare" value="League Average")
-								button#submit(type="submit") Submit
+								button.compare-btn#compare-submit(type="submit") Submit
 								div.pic
 									-if("#{photoUrl}" != undefined)
 										img(src="#{photoUrl}")
@@ -111,15 +110,15 @@ html
 										li Name: #{fullName}
 										li Team: #{teamName}
 										li Position: #{position}
-								form.favorite-form(action="/add_fav" method="post")		
+								form.favorite-form.text-center(action="/add_fav" method="post")		
 									input#fav-input(type="hidden",name="favorite" value="#{id}") 
-									button#add-player(type="submit") Add Player
+									button.compare-btn(type="submit") Add Player to Favorites
 								
 
 				div.charts-container.col-sm-7
 					div#charts(style="width:100%; height:400px;") 
 					div#stats-table.text-center 
-						table.table.table-striped
+						table.table
 							h4 Player Stats Per Game
 							thead
 								tr 

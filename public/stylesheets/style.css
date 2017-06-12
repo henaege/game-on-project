@@ -1,10 +1,10 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px Verdana, Helvetica, Arial, sans-serif;
   box-sizing: border-box;
 }
 
 a {
-  color: #00B7FF;
+  color: #00B7FF ;
 }
 
 img {
@@ -13,18 +13,23 @@ img {
 }
 h1{
     font-family: 'Squada One', sans-serif;    
-   text-align: center;
+  text-align: center;
     color: white;
     padding-top: 330px;
     font-size: 80px;  
-   text-shadow: 2px 3px black;
+  text-shadow: 2px 3px black;
 }
 
 h3{
-    font-family: 'Ubuntu Condensed', sans-serif;
+    font-family: Verdana, sans-serif;
     text-align: center;
     font-size: 25px;
+    font-weight: 600;
     color: #fac51c ;
+}
+
+p {
+  font-size: 18px;
 }
 
 .log-in{
@@ -36,6 +41,27 @@ h3{
     float: right;
     margin-bottom: 5px;
 }
+
+.settings-button {
+  border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    float: right;
+    margin-top: 10px;
+    color: #dcdcdc;
+}
+
+.settings-button:hover {
+  color: white;
+  background-color: transparent;
+}
+
+.settings-button:focus {
+  color: #dcdcdc;
+  background-color: transparent;
+  outline: none;
+}
+
 
 .log-in:hover{
     opacity: 0.5;
@@ -52,7 +78,7 @@ h3{
 }
 
 .form-container{
-	text-align: center;
+    text-align: center;
   margin-top: 100px;
 }
 
@@ -65,32 +91,42 @@ label {
 }
 
 .second-section{
-	display: none;
+    display: none;
 }
 .first-section{
-	transition: all;
+    transition: all;
 }
 
 .nav-bar, .option-panel-container, .charts-container, .news-container {
   border:  1px solid black;
-  
+}
+
+.option-panel-container {
+  padding: 0;
 }
 
 .nav-bar {
   width:  100%;
   height: 50px;
-  background-color: #333335;
+  background-color: #333335 ;
+}
+
+
+.option-panel {
+  width: 100%;
+  margin: 5px;
+  padding: 0;
 }
 
 .option-panel-container, .charts-container, .news-container {
   height: 100%;
   /* width:  50%; */
-  background-color: #333335;
+  background-color: #333335 ;
 
 }
 
 .option-panel-container h3,h5, .news-container h3{
-  color: #77fc2a;
+  color: #77fc2a ;
 }
 
 
@@ -102,14 +138,40 @@ label {
 .pic {
   margin-top: 10px;
   border: 1px solid white;
-  background-color: #bbbcbf;
+  background-color: #bbbcbf ;
 
 }
 
+input {
+  background-color: #666666;
+  color: #dcdcdc;
+  border: none;
+  font-size: 18px;
+}
+
+
+select {
+  background-color: #666666;
+  color: #dcdcdc;
+  border: none;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.compare-btn {
+  background-color: #666666;
+  color: #dcdcdc;
+  border: none;
+  font-size: 18px;
+}
+
+.compare-submit {
+  margin-left: 15px;
+}
 .info{
   border: none;
   color: white;
-  color: #77fc2a;
+  color: #77fc2a ;
 }
 
 .info #add-player{
@@ -133,10 +195,60 @@ label {
 
 
 #stats-table {
-  color: #D75F57;
+  color: #D75F57 ;
 }
 
 .table{
-  color: #D75F57;
+  color: #D75F57 ;
 
+}
+
+.modal-content {
+  background-color: rgba(50, 50, 50, .9);
+  color: #dcdcdc;
+}
+
+.modal-header {
+  color: #dcdcdc;
+}
+
+.modal-table {
+  color: #dcdcdc;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: rgba(40, 40, 40, 1);
+  border-bottom: none;
+  border-top: none;
+}
+
+.edit-btn, .remove-btn {
+  background-color: #666666;
+  color: #dcdcdc;
+  border: none;
+  border-radius: 0;
+}
+
+
+
+.save-btn {
+  background-color: green;
+  color: #dcdcdc;
+  border: none;
+  border-radius: 0;
+  font-size: 18px;
+}
+
+.save-btn:hover {
+  background-color: #77FC2A;
+  color: #666666;
+}
+
+.cancel-btn {
+  background-color: #dcdcdc;
+  color: #666666;
+  border: none;
+  border-radius: 0;
+  font-size: 18px;
+  margin-right: 15px;
 }
