@@ -17,7 +17,7 @@ $(document).ready(function(){
 		$('#wrapper_bgndVideo').css('filter','blur(10px)');
     });
     if(registered){
-        $('#accountSetting').modal('show');    
+        $('#accountSetting').modal('show');  
     }
 	var nameSource = availableTags.split(",");
 	nameSource = nameSource.slice(0, -2);
@@ -69,7 +69,7 @@ $(document).ready(function(){
     $(".edit-btn").click(()=>{
         var oldUsername = user
         $(".username-form-container").html("");
-        $(".username-form-container").html(`<form class='username-form' action='/changeUsername' method='post'><table class='table'><thead><tr><th class='text-center'> Your User Name </th><th class='text-center'> Action </th></tr></thead><tbody><td class="text-center"><input class="username-row" type="text" name="newUsername" value="${oldUsername}"></td><td class='text-center'><button class='btn btn-warning edit-btn'> Edit</button><button class='btn btn-primary type='submit'> Save</button></td></tbody></form>`);
+        $(".username-form-container").html(`<form class='username-form' action='/changeUsername' method='post'><table class='table modal-table table-hover'><thead><tr><th class='text-center'> Your User Name </th><th class='text-center'> Action </th></tr></thead><tbody><td class="text-center"><input class="username-row" type="text" name="newUsername" value="${oldUsername}"></td><td class='text-center'><button class='btn btn-warning edit-btn'> Edit</button><button class='btn btn-primary type='submit'> Save</button></td></tbody></form>`);
         $(".username-row").focus(function(){
             $(".username-row").attr("value", "");
         });
@@ -78,10 +78,7 @@ $(document).ready(function(){
         $(".username-row").attr("value", "");
         
     });
-    $(".cancel-btn").click(()=>{
-        $(".username-form-container").html("");
-        $(".username-form-container").html(`<form class='username-form' action='/changeUsername' method='post'><table class='table'><thead><tr><th class='text-center'> Your User Name </th><th class='text-center'> Action </th></tr></thead><tbody><td class="username-row text-center">${user}</td><td class='text-center'><button class='btn btn-warning edit-btn'> Edit</button><button class='btn btn-primary type='submit'> Save</button></td></tbody></form>`);
-    });
+
 	
 Highcharts.theme = {
    colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
@@ -319,7 +316,7 @@ Highcharts.chart('charts', {
 
     tooltip: {
         shared: true,
-        pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}%</b><br/>'
     },
 
     legend: {
