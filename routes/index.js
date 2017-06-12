@@ -281,7 +281,15 @@ router.get('/user', (req, res)=>{
   });
 
 
-
+router.post('/add_fav', (req,res)=>{
+    var fav = req.body.favorite;
+    var user_email = req.session.email;
+    var favQuery = "INSERT INTO fav_player(user_email, player_id) VALUES (?, ?);";
+    connection.query(favQuery,[user_email, fav], (error, results)=>{
+        if(error)throw error;
+        res.redirect('/user?msg=addedPlayer');
+    });
+});
 /////////////////////
 
 
