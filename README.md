@@ -109,8 +109,12 @@ Of course everyone had their own ideas about how to layout the site, whether to 
     <img src="http://via.placeholder.com/350x150"></img>
 </p>
 
-### Challenge 4 - TBD
+### Challenge 4 - Chart setup
 Pickled man braid flexitarian neutra, try-hard fixie portland tacos synth direct trade four dollar toast tbh. Fanny pack selfies adaptogen DIY chicharrones messenger bag, succulents health goth cliche bushwick typewriter cray fashion axe. Meditation affogato trust fund ennui letterpress. Banh mi mumblecore kogi 8-bit pickled. Pop-up jean shorts cornhole edison bulb, retro helvetica artisan narwhal. Coloring book vegan cronut, kinfolk mlkshk raclette seitan. Retro quinoa locavore, 3 wolf moon lomo hot chicken taxidermy beard offal austin DIY master cleanse ennui echo park.
+
+### Challenge 5 - Add favorite button
+
+keeping the same player on the page, not loading the modal, adding to the list
 
 <br>
 
