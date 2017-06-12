@@ -69,7 +69,7 @@ $(document).ready(function(){
     $(".edit-btn").click(()=>{
         var oldUsername = user
         $(".username-form-container").html("");
-        $(".username-form-container").html(`<form class='username-form' action='/changeUsername' method='post'><table class='table modal-table table-hover'><thead><tr><th class='text-center'> Your User Name </th><th class='text-center'> Action </th></tr></thead><tbody><td class="text-center"><input class="username-row" type="text" name="newUsername" value="${oldUsername}"></td><td class='text-center'><button class='btn btn-warning edit-btn'> Edit</button><button class='btn btn-primary type='submit'> Save</button></td></tbody></form>`);
+        $(".username-form-container").html(`<form class='username-form' action='/changeUsername' method='post'><table class='table modal-table table-hover'><thead><tr><th class='text-center'> Your User Name </th><th class='text-center'> Action </th></tr></thead><tbody><td class="text-center username-row"><input class="username-row" type="text" name="newUsername" value="${oldUsername}"></td><td class='text-center'><button class='edit-btn' type="button"> Edit</button><button class='save-btn' type='submit'> Save Changes</button></td></tbody></form>`);
         $(".username-row").focus(function(){
             $(".username-row").attr("value", "");
         });
