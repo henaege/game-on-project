@@ -56,9 +56,9 @@ html
 										th.text-center Action
 									tbody
 										tr.text-center
-										td.text-center #{sessionInfo.username}
+										td.text-center.username-row #{sessionInfo.username}
 										td.text-center
-											button.btn.btn-warning Edit
+											button.btn.btn-warning.edit-btn Edit
 									
 							div.row
 								div.col-sm-12.text-center
@@ -73,8 +73,8 @@ html
 											tr.text-center
 												td.text-center= val
 												td.text-center
-													a(href="/delete/#{val.id}")
-													button.btn.btn-danger Remove
+													a(href="/delete/#{id}")
+														button.btn.btn-danger.remove-btn Remove
 							
 											
 						div.modal-footer
@@ -93,7 +93,7 @@ html
 						h3 Stats
 						div.search-bar
 							form.form-group(action="/user" method="post")
-								input#search-input(type="text", placeholder="Search", name="search")
+								input#search-input(type="text", placeholder="Search", name="search" value="#{fullName}")
 								h5 Compare To:
 								select#compare-to
 									option(value="League Average") League Average

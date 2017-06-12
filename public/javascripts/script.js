@@ -16,15 +16,13 @@ $(document).ready(function(){
 		$('.first-section').fadeOut(1000,complete);					
 		$('#wrapper_bgndVideo').css('filter','blur(10px)');
     });
-    console.log(registered);
     if(registered){
-        console.log("test");
         $('#accountSetting').modal('show');    
     }
 	var nameSource = availableTags.split(",");
 	nameSource = nameSource.slice(0, -2);
     $("#search-input").focus(function(){
-        console.log(nameSource);
+        $("#search-input").attr("value", "");
         $("#search-input").autocomplete({
     	    minLength: 2,
             source: function( request, response ) {
@@ -67,6 +65,13 @@ $(document).ready(function(){
     });
 
     //console.log(typeof(PPGrank));
+    $(".edit-btn").click(()=>{
+        $(".username-row").html(`<input class="username-row" type="text" value="${$(".username-row").html()}">`);
+        $(".username-row").focus(function(){
+            $(".username-row").attr("value", "");
+        });
+    });
+
 	
 Highcharts.chart('charts', {
 
