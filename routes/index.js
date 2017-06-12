@@ -26,11 +26,10 @@ connection.connect();
 router.get('/user', (req, res)=>{
 
   // === Condition for deciding which player stats to load ===
-    if(req.session.currentPlayer != undefined){
+
+    if (req.session.currentPlayer != undefined){
       randomGoodPlayer = req.session.currentPlayer;
-      console.log(randomGoodPlayer);
-    }
-    else if (req.session.fav_player != undefined) {
+    } else if (req.session.fav_player != undefined) {
         bestPlayerIds = req.session.favPlayer;
         randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * bestPlayerIds.length)].player_id;
     } else {
@@ -167,10 +166,23 @@ router.post('/add_fav', (req,res)=>{
     connection.query(favQuery,[user_email, fav], (error, results)=>{
         if(error)throw error;
         req.session.currentPlayer = fav;
-        console.log(fav);
-        res.redirect(`/user?msg=addedFavorite`);
+        res.redirect(`/user?msg=addedPlayer`);
     });
 });
+
+  router.get('/fav_load/:val', (req, res)=>{
+    var fullName = req.params.val;
+    console.log(fullName);
+    var nameArray = fullName.split(' ');
+    var idQuery = `SELECT id FROM player_info WHERE (first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}');`; 
+    connection.query(idQuery, (error, results)=>{
+      if(error) throw error;
+      console.log(results);
+      var idToLoad = results[0].id;
+      req.session.currentPlayer = idToLoad;
+      res.redirect('/user?msg=loadFav');
+    });
+  });
 /////////////////////
 
 // ================= Post request from user page ===========
