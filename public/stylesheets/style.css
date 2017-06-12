@@ -348,6 +348,7 @@ tr{
   text-shadow: 2px 3px black;
   float: left;
   margin-top: 5px;
+  margin-left: 10px;
 }
 .about{
     font-family: Verdana, sans-serif; 
