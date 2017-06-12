@@ -78,10 +78,7 @@ $(document).ready(function(){
         $(".username-row").attr("value", "");
         
     });
-    $(".cancel-btn").click(()=>{
-        $(".username-form-container").html("");
-        $(".username-form-container").html(`<form class='username-form' action='/changeUsername' method='post'><table class='table modal-table table-hover'><thead><tr><th class='text-center'> Your User Name </th><th class='text-center'> Action </th></tr></thead><tbody><tr class="text-center"></tr><td class="username-row text-center">${user}</td><td class='text-center'><button class='btn btn-warning edit-btn'> Edit</button><button class='btn btn-primary type='submit'> Save</button></td></tbody></form>`);
-    });
+
 	
 Highcharts.chart('charts', {
 
@@ -116,7 +113,7 @@ Highcharts.chart('charts', {
 
     tooltip: {
         shared: true,
-        pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}%</b><br/>'
     },
 
     legend: {

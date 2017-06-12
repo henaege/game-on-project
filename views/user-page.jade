@@ -37,6 +37,7 @@ html
 			}
 			var registered = "#{sessionInfo.registered}";
 			var user = "#{sessionInfo.username}";
+			//- var favPlayerId = "#{sessionInfo.favPlayer}";
 		script(type='text/javascript' src='/javascripts/script.js')
 	body
 		div.main-content-container.container
@@ -55,10 +56,9 @@ html
 											th.text-center Your User Name
 											th.text-center Action
 										tbody
-											tr.text-center
 											td.text-center.username-row #{sessionInfo.username}
 											td.text-center
-												button.edit-btn Edit
+												button.edit-btn(type="button") Edit
 												button.save-btn(type="submit") Save Changes
 									
 							div.row
@@ -74,7 +74,7 @@ html
 											tr.text-center
 												td.text-center= val
 												td.text-center
-													a(href="/delete/#{id}")
+													a(href="/delete/#{val}")
 														button.remove-btn Remove
 							
 											

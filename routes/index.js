@@ -159,7 +159,7 @@ connection.connect();
 
 
 router.get('/user', (req, res)=>{
-  if(req.query.msg == 'loggedin'){
+  if(req.query.msg == 'loggedin' || req.query.msg == 'deleted'){
     if(req.session.fav_player != undefined){
       bestPlayerIds = req.session.favPlayer;
       randomGoodPlayer = bestPlayerIds[Math.floor(Math.random()*bestPlayerIds.length)].player_id;
@@ -322,7 +322,7 @@ router.post('/user', (req, res)=>{
       compareId = results[1].id;
 
       // console.log(typeof(playerId));
-      var selectQuery = `SELECT photo, team, position FROM player_info WHERE id = ${playerId};`;
+      var selectQuery = `SELECT photo, team, position FROM player_info WHERE id = '${playerId}';`;
 
         connection.query(selectQuery, (error, results)=>{
           if(error) throw error;
@@ -330,7 +330,7 @@ router.post('/user', (req, res)=>{
           var teamName = results[0].team;
           var position = results[0].position;
           
-          var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank, total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE (id = ${playerId}) OR (id = ${compareId});`;
+          var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank, total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE (id = '${playerId}') OR (id = '${compareId}');`;
 
           connection.query(rankQuery, (error, results)=> {
             var PPGrank = Math.round((results[0].PPGrank/517)*10000)/100;
@@ -364,7 +364,7 @@ router.post('/user', (req, res)=>{
                           player_info.last_name)
                           AS player_full_name
                          FROM player_info
-                         INNER JOIN fav_player ON player_info.id = fav_player.player_id WHERE user_email = '${req.session.email};`;
+                         INNER JOIN fav_player ON player_info.id = fav_player.player_id WHERE user_email = '${req.session.email}';`;
               connection.query(faveQuery, (error, results)=> {
 
                   for (let i = 0; i < results.length; i++) {
@@ -468,13 +468,19 @@ router.post('/user', (req, res)=>{
       });
     });
 
-    router.get('/delete/:id', (req, res)=>{
-      var idToDelete = req.params.id;
-      console.log(req.params.id);
-      var deleteQuery = `DELETE FROM fav_player WHERE player_id = '${idToDelete}' AND user_email = '${req.session.email}';`;
-      connection.query(deleteQuery, (error, results)=>{
+    router.get('/delete/:val', (req, res)=>{
+      console.log(req.params.val);
+      var fullName = req.params.val;
+      var nameArray = fullName.split(' ');
+      var idQuery = `SELECT id FROM player_info WHERE (first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}');`; 
+      connection.query(idQuery, (error, results)=>{
+        if(error) throw error;
+        var idToDelete = results[0].id;
+        var deleteQuery = `DELETE FROM fav_player WHERE player_id = '${idToDelete}' AND user_email = '${req.session.email}';`;
+        connection.query(deleteQuery, (error, results)=>{
         if (error) throw error;
           res.redirect('/user?msg=deleted');
+        });
       });
     });
     router.post('/changeUsername', (req,res)=>{
