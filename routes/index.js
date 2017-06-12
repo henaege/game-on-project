@@ -292,6 +292,20 @@ router.post('/add_fav', (req,res)=>{
         res.redirect(`/user?msg=addedPlayer`);
     });
 });
+
+  router.get('/fav_load/:val', (req, res)=>{
+    var fullName = req.params.val;
+    console.log(fullName);
+    var nameArray = fullName.split(' ');
+    var idQuery = `SELECT id FROM player_info WHERE (first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}');`; 
+    connection.query(idQuery, (error, results)=>{
+      if(error) throw error;
+      console.log(results);
+      var idToLoad = results[0].id;
+      req.session.currentPlayer = idToLoad;
+      res.redirect('/user?msg=loadFav');
+    });
+  });
 /////////////////////
 
 
