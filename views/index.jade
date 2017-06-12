@@ -31,13 +31,16 @@ html
 						h1 
 							span#game GAME 
 							span#on ON
-							h3#experience A Data Visualization Experience
-						button#start-btn(onclick="jQuery('#bgndVideo').YTPPause()") Get Started
+						
 			
 				div.row
-					div.game-on.col-sm-2-offset-5
-						button.about-button(type="button"  data-toggle="modal" data-target="#about") About 
-							span#button-tag GAME ON
+					div.game-on.game-on-fade.col-sm-2-offset-5
+						h3#experience A Data Visualization Experience
+						button#start-btn.game-on-fade(onclick="jQuery('#bgndVideo').YTPPause()") Get Started
+					div.row
+						div.game-on.game-on-fade.col-sm-2-offset-5
+							button.about-button(type="button"  data-toggle="modal" data-target="#about") About 
+								span#button-tag GAME ON
 							
 			div.second-section.container
 				div.row
