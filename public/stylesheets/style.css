@@ -360,3 +360,19 @@ tr{
     font-size: 25px;  
   text-shadow: 2px 2px black;
 }
+
+#first-player{
+    color: #2B908F;
+}
+
+#second-player{
+    color: #90EE7E;
+}
+
+#table-lables{
+    color: #E0E0E3;
+}
+
+#table-title{
+    color: #E0E0E3;
+}
