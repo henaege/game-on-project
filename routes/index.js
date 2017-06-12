@@ -159,7 +159,9 @@ connection.connect();
 
 
 router.get('/user', (req, res)=>{
-    if (req.session.fav_player != undefined) {
+    if (req.session.currentPlayer != undefined){
+      randomGoodPlayer = req.session.currentPlayer;
+    } else if (req.session.fav_player != undefined) {
         bestPlayerIds = req.session.favPlayer;
         randomGoodPlayer = bestPlayerIds[Math.floor(Math.random() * bestPlayerIds.length)].player_id;
     } else {
@@ -286,7 +288,8 @@ router.post('/add_fav', (req,res)=>{
     var favQuery = "INSERT INTO fav_player(user_email, player_id) VALUES (?, ?);";
     connection.query(favQuery,[user_email, fav], (error, results)=>{
         if(error)throw error;
-        res.redirect('/user?msg=addedPlayer');
+        req.session.currentPlayer = fav;
+        res.redirect(`/user?msg=addedPlayer`);
     });
 });
 /////////////////////

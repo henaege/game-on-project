@@ -119,7 +119,7 @@ html
 											p Position: #{position}
 								form.favorite-form.text-center(action="/add_fav" method="post")
 									input#fav-input(type="hidden",name="favorite" value="#{id}") 
-									button.compare-btn(type="submit") Add Player to Favorites
+									button.compare-btn#favorite-button(type="submit") Add Player to Favorites
 								
 
 				div.charts-container.col-sm-7
