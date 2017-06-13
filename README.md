@@ -36,7 +36,7 @@ Users also get an automatically-updated news feed for timely inspiration of play
 ## Team Strategy
 It all began with Yingrong's idea to do data visualization. She and Drew planned to work together based on the work they did on a previous project. Initially, the idea was to do data visualization on things like budgets, diet, exercise, and the like. Drew then came up with the idea to do visualizations with sports stat data. The main focus for the MVP would be the NBA due to the relative simplicity of the stats and the timeliness of the NBA playoffs occuring at the same time as the project. They soon recruited Chad, and were then lucky to be able to sign free agent Shane to complete a four-person super group.
 <br>
-Mob programming was utilized to build the database and core functionality, as well as the front-end elements. the team got off to a great start and were able to complete several of their requirements on day one.
+Mob programming was utilized to build the database and core functionality, as well as the front-end elements. The team got off to a quick start and were able to complete several of their requirements on day one.
 
 ## Site Walkthrough
 
