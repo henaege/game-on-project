@@ -19,7 +19,6 @@ Users also get an automatically-updated news feed for timely inspiration of play
 * HTML
 * CSS
 * Highcharts.js
-* Amazon Web Services (AWS)
 
 
 ## Dependencies and Plugins
