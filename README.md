@@ -3,7 +3,7 @@
 
 ## What It Is
 Game On is a full stack web app used to visualize sports data. It allows users to visualize player and team stats like never before and perform analyses that have previously been difficult to render. Users can log in with a user name and password, save favorite players, and build visualization charts from player data.
-Users also get an automatically-updated news feed based on players and teams saved as favorites.
+Users also get an automatically-updated news feed for timely inspiration of players to compare stats on.
 ## Team members
 * <a href="https://github.com/cshall13">Shane Hall</a>
 * <a href="https://github.com/chadm9">Chad McKee</a>
@@ -49,9 +49,9 @@ The Get Started button takes a new user to a registration form where they can en
 </p>
 
 ### User Page
-After logging in the user is brought to their User page. This is where the magic happens. A default chart is displayed using data from the database. The controls on the left allow the user to build their own chart based on players or teams and stats of their choosing.
+After logging in the user is brought to their User page. This is where the magic happens. A default chart is displayed in the center of the page using data from the database. The controls on the left allow the user to build their own chart based on players of their choosing.
 Our backend uses express to query the database for the requested information and the data is rendered by highcharts.js into a beautiful visualization. The page is rendered using Pug (Jade).
-Along the top of the page a news feed of players and teams the user has saved as favorites is updated automatically.
+Along the right side of the page a news feed allows a quick reference for timely data comparison ideas and is updated automatically.
 <p align='center'>
     <img src="./public/images/user.png" /></img>
 </p>
