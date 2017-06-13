@@ -13,6 +13,8 @@ img {
   width: auto;
   /*height:  100%;*/
   margin-left: -15px;
+  background: url('http://198.1.111.123/~theinscr/wp-content/uploads/2016/12/nba-logo-on-wood.jpg');
+  background-size: contain;
 }
 h1{
   font-family: 'Squada One', sans-serif;    
@@ -200,6 +202,7 @@ label {
   width:  100%;
   height: 50px;
   background-color: #333335 ;
+  background: linear-gradient(black, #333335);
 }
 
 
@@ -214,11 +217,15 @@ label {
   height: 100%;
   /* width:  50%; */
   background-color: #333335 ;
-
+  background: linear-gradient(#333335, black);
 }
 
 .option-panel-container h3,h5, .news-container h3{
   color: #77fc2a ;
+}
+
+.option-panel h3, .news-container h3{
+  font-family: 'Permanent Marker', cursive;
 }
 
 
@@ -258,6 +265,11 @@ select {
   color: #dcdcdc;
   border: none;
   font-size: 18px;
+}
+
+#comparison-message{
+  font-family: 'Acme', sans-serif;
+  font-size: 2rem; 
 }
 
 #compare-submit {
@@ -382,7 +394,12 @@ tr{
 
 ul {
   list-style-type: none;
-  padding: 0
+  padding: 0;
+  font-family: 'Acme', sans-serif; 
+}
+
+#list-name, #list-team, #list-position{
+  font-size: 2rem;   
 }
 
 #button-tag{
@@ -411,7 +428,7 @@ ul {
 
 @media (max-width: 768px){
   .option-panel-container{
-    height: 60%;
+    height: 95%;
   }
 }
 @media (min-width: 768px){

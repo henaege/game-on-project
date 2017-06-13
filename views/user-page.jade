@@ -2,7 +2,7 @@ html
 	head
 		title Game On
 		link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
-		link(href="https://fonts.googleapis.com/css?family=Squada+One|Ubuntu+Condensed" rel="stylesheet")
+		link(href="https://fonts.googleapis.com/css?family=Squada+One|Ubuntu+Condensed|Permanent+Marker|Acme" rel="stylesheet")
 		script(src="http://code.highcharts.com/highcharts.js")
 
 		link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
@@ -99,7 +99,7 @@ html
 								form.form-group#search-form(action="/user" method="post")
 									input#search-input(type="text", placeholder="Search", name="search" value="#{fullName}")
 									p.message
-									h5 Compare To:
+									h5#comparison-message Compare To:
 									select#compare-to
 										option(value="League Average") League Average
 										option(value="League Best") League Best
@@ -115,11 +115,11 @@ html
 								-if ("#{fullName}" != undefined)
 									ul
 										li
-											p Name: #{fullName}
+											p#list-name Name: #{fullName}
 										li
-											p Team: #{teamName}
+											p#list-team Team: #{teamName}
 										li 
-											p Position: #{position}
+											p#list-position Position: #{position}
 						div.row
 							div.fav-form-container.col-xs-5.col-xs-offset-3.text-center.col-sm-10
 								form.favorite-form(action="/add_fav" method="post")
