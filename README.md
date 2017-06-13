@@ -1,6 +1,5 @@
 # Game On
 ---
-## [Live Demo]
 
 ## What It Is
 Game On is a full stack web app used to visualize sports data. It allows users to visualize player and team stats like never before and perform analyses that have previously been difficult to render. Users can log in with a user name and password, save favorite players, and build visualization charts from player data.
