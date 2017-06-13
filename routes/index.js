@@ -7,6 +7,8 @@ var serverInfo = require('../config/config');
 var array = [];
 var request = require('request');
 var newsApiKey = serverInfo.newApiKey;
+var Twitter = require('twitter');
+
 
 // =====Go to HOME page ====
 router.get('/', function(req, res, next) {
@@ -26,7 +28,7 @@ connection.connect();
 router.get('/user', (req, res)=>{
 
   // === Condition for deciding which player stats to load ===
-
+    var playerTwitterName = ['KingJames', 'carmeloanthony', 'StephenCurry30'];
     if (req.session.currentPlayer != undefined){
       randomGoodPlayer = req.session.currentPlayer;
     } else if (req.session.fav_player != undefined) {
@@ -60,6 +62,41 @@ router.get('/user', (req, res)=>{
         for (let i = 0; i < newsData.response.docs.length; i ++){
           news.push([newsData.response.docs[i].headline.main, newsData.response.docs[i].web_url]);
         }
+
+        // === Setting up Twitter ===
+
+      
+      var tweet;
+      var T = new Twitter(serverInfo);
+      var params = {
+        screen_name: 'NBA',
+        count: 10,
+        result_type: 'recent',
+        lang: 'en'
+      }
+
+      T.get('statuses/user_timeline', params, function(err, data, response){
+        if(!err){
+          // res.json(data);
+            tweetUrl = `https://twitter.com/NBA/status/${data[0].id_str}`;
+            // console.log(tweet);
+            var options = {
+              url: tweetUrl,
+              lang:"en",
+              theme:"dark",
+              link_color:"#2B7BB9",
+              hide_media:"true",
+            }
+            T.get('statuses/oembed', options, function(err, data, response){
+                if(!err){ 
+                  console.log(data.url);
+                   tweet = data.url;
+                }else{
+                  console.log(err);
+                }
+
+      
+
 
         // === Getting player stats from per_game table ====
 
@@ -148,10 +185,16 @@ router.get('/user', (req, res)=>{
                 comprebounds: comprebounds,
                 compminutes: compminutes,
                 compthree_points: compthree_points,
-                compName: compName
+                compName: compName,
+                tweets: tweet
+              });
               });
             });
           });
+          });
+        }else{
+          console.log(err);
+        }
         });
       });
     });
