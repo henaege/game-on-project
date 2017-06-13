@@ -414,6 +414,18 @@ router.post('/user', (req, res)=>{
       });
     });
 
+    router.get('/logout',(req,res)=>{
+      req.session.email = undefined; 
+      req.session.favPlayer = undefined; 
+      req.session.loggedin= false; 
+      req.session.registered= undefined;
+      req.session.username= undefined;
+      // console.log(req.session.favPlayer); 
+
+                
+      res.redirect('/');
+    });
+
     router.get('/delete/:val', (req, res)=>{
       console.log(req.params.val);
       var fullName = req.params.val;

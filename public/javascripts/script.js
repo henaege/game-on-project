@@ -301,7 +301,7 @@ Highcharts.setOptions(Highcharts.theme);
 Highcharts.chart('charts', {
 
     chart: {
-        backgroundColor: '#333335',
+        backgroundColor: 'rgba(1,1,1,0)',
         polar: true,
         type: 'line'
 

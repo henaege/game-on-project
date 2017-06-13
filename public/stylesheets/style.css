@@ -9,17 +9,30 @@ a {
   color: #00B7FF ;
 }
 
-img {
+#player-image {
   width: auto;
-  height:  100%;
+  /*height:  100%;*/
   margin-left: -15px;
+  background: url('http://198.1.111.123/~theinscr/wp-content/uploads/2016/12/nba-logo-on-wood.jpg');
+  background-size: contain;
 }
+
+#back-arrow{
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  border: 1px solid white;
+}
+
 h1{
   font-family: 'Squada One', sans-serif;    
   text-align: center;
   color: white;
   padding-top: 330px;
-  font-size: 80px;  
+  font-size: 8rem;  
   text-shadow: 2px 3px black;
 }
 
@@ -56,7 +69,7 @@ h1{
 h3{
     font-family: Verdana, sans-serif;
     text-align: center;
-    font-size: 25px;
+    font-size: 3rem;
     font-weight: 600;
     color: #fac51c ;
 }
@@ -80,7 +93,7 @@ h3{
 }
 
 p, h5 {
-  font-size: 18px;
+  font-size: 1.5rem;
 }
 
 .message {
@@ -100,7 +113,7 @@ p, h5 {
 
 .main-content-container {
   width: 100vw;
-  padding: 0;
+  padding: 5px;
 }
 
 .sign-up-form-container, .login-form-container {
@@ -173,9 +186,9 @@ p, h5 {
   margin-top: 100px;
 }
 
-.form-group {
+/*.form-group {
   margin: 15px;
-}
+}*/
 
 label {
   margin-right: 15px;
@@ -193,19 +206,21 @@ label {
 }
 
 .option-panel-container {
-  padding: 0;
+  padding: 1rem;
 }
 
 .nav-bar {
   width:  100%;
   height: 50px;
   background-color: #333335 ;
+  background: linear-gradient(black, #333335);
 }
 
 
 .option-panel {
   width: 100%;
-  margin: 5px;
+  /*margin: 5px;*/
+  height:100%;
   padding: 0;
 }
 
@@ -213,27 +228,31 @@ label {
   height: 100%;
   /* width:  50%; */
   background-color: #333335 ;
-
+  background: linear-gradient(#333335, black);
 }
 
 .option-panel-container h3,h5, .news-container h3{
   color: #77fc2a ;
 }
 
-
-.pic, .info {
-  width: 90%;
-  height: 30%;
+.option-panel h3, .news-container h3{
+  font-family: 'Permanent Marker', cursive;
 }
 
+
+/*.pic, .info {
+  width: 90%;
+  height: 30%;
+}*/
+/*.pic-container {
+  margin: 5px;
+}*/
 .pic {
   margin-top: 10px;
-  border: 1px solid white;
-  background-color: #bbbcbf;
-  width: auto;
-  height: 210px;
+  /*border: 1px solid white;*/
+  background-color: #333335;
+  max-width: 100%;
   overflow: hidden;
-
 }
 
 input {
@@ -259,8 +278,14 @@ select {
   font-size: 18px;
 }
 
-.compare-submit {
-  margin-left: 15px;
+#comparison-message{
+  font-family: 'Acme', sans-serif;
+  font-size: 2rem; 
+}
+
+#compare-submit {
+  margin-left: 5px;
+  margin-top: 10px;
 }
 .info{
   border: none;
@@ -280,6 +305,9 @@ select {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+#search-input {
+  width:90%;
+}
 
 #submit{
   margin-left: 8px;
@@ -287,6 +315,7 @@ select {
 
 #charts{
   margin-top: 15px;
+  height:500px;
 }
 
 
@@ -363,6 +392,22 @@ tr{
   margin-top: 5px;
   margin-left: 10px;
 }
+
+#logout-link{
+  font-family: 'Squada One', sans-serif;    
+  color: white;
+  font-size: 33px;  
+  text-shadow: 2px 3px black;
+  float: left;
+  margin-top: 5px;
+  margin-left: 10px; 
+}
+
+#logout-link:hover{
+  text-decoration: none;
+}
+
+
 .about-button{
     font-family: Verdana, sans-serif; 
     font-size: 16px;
@@ -376,6 +421,12 @@ tr{
 
 ul {
   list-style-type: none;
+  padding: 0;
+  font-family: 'Acme', sans-serif; 
+}
+
+#list-name, #list-team, #list-position{
+  font-size: 2rem;   
 }
 
 #button-tag{
@@ -401,3 +452,49 @@ ul {
 #table-title{
     color: #E0E0E3;
 }
+
+@media (max-width: 768px){
+  .option-panel-container{
+    height: 95%;
+  }
+}
+@media (min-width: 768px){
+  .search-bar {
+  margin: 0.8rem;
+  }
+  .pic-container {
+    margin-left:0.3rem;
+  }
+  .info {
+    margin-left: 1rem;
+  }
+  .info ul{
+    padding: 0;
+  }
+  .fav-form-container{
+    margin-left: 1rem;
+  }
+
+  .compare-btn {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (max-width: 555px){
+    #table-lables{
+        font-size: 10px;
+    }
+    #first-player{
+        font-size: 10px;
+    }
+    #second-player{
+        font-size: 10px;
+    }
+    #table-title{
+        font-size: 12px;
+    }
+}
+
+
+
+
