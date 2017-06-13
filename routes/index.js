@@ -163,10 +163,21 @@ router.post('/add_fav', (req,res)=>{
     var user_email = req.session.email;
     req.session.registered = false;
     var favQuery = "INSERT INTO fav_player(user_email, player_id) VALUES (?, ?);";
-    connection.query(favQuery,[user_email, fav], (error, results)=>{
+    var alreadyAddedQuery = `SELECT player_id, user_email FROM fav_player WHERE user_email = '${user_email}' AND player_id = '${fav}';`;
+
+    connection.query(alreadyAddedQuery, (error, results)=>{
         if(error)throw error;
-        req.session.currentPlayer = fav;
-        res.redirect(`/user?msg=addedPlayer`);
+        //console.log(results);
+        if(results.length > 0){
+            req.session.currentPlayer = fav;
+            res.redirect(`/user?msg=addedPlayer`);
+        }else{
+            connection.query(favQuery,[user_email, fav], (error, results)=>{
+                if(error)throw error;
+                req.session.currentPlayer = fav;
+                res.redirect(`/user?msg=addedPlayer`);
+            });
+        }
     });
 });
 
