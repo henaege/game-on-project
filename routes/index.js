@@ -491,24 +491,24 @@ router.post('/user', (req, res)=>{
   // for(let i = 0; i < APIdata.playerstatsentry.length; i++){
     // res.render('test', {data: APIdata.cumulativeplayerstats.playerstatsentry[1].player.LastName});
   // =============================== Getting rank for each per_game data =========================
-  // var array = [];
-  // var playerName = req.body.search;
-  // var selectQuery = "SELECT id FROM per_game ORDER BY three_points ASC;";
-  // connection.query(selectQuery, (error, results)=>{
-  //   if(error) throw error;
-  //   for (let i = 0; i < results.length; i++){
-  //     array.push(results[i].id);
-  //   }
-  //   console.log(array);
-  //   for (let j = 0; j < array.length; j++){
-  //     var rank = j + 1;
-  //     var insertQuery = `UPDATE per_game SET THREErank = ${rank} WHERE id = ${parseInt(array[j])};`;
-  //     connection.query(insertQuery, (error, results)=>{
-  //     if (error) throw error;
+//   var array = [];
+//   var playerName = req.body.search;
+//   var selectQuery = "SELECT id FROM per_game ORDER BY three_points ASC;";
+//   connection.query(selectQuery, (error, results)=>{
+//     if(error) throw error;
+//     for (let i = 0; i < results.length; i++){
+//       array.push(results[i].id);
+//     }
+//     console.log(array);
+//     for (let j = 0; j < array.length; j++){
+//       var rank = j + 1;
+//       var insertQuery = `UPDATE per_game SET THREErank = ${rank} WHERE id = ${parseInt(array[j])};`;
+//       connection.query(insertQuery, (error, results)=>{
+//       if (error) throw error;
 
-  //   });
-  //   }
+//     });
+//     }
 // });
-   // ====================================END ======================================================
+  //  ====================================END ======================================================
 
 module.exports = router;

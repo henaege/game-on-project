@@ -83,6 +83,10 @@ p, h5 {
   font-size: 18px;
 }
 
+.message {
+  color: #AF1B3F;
+}
+
 .log-in{
     font-size: 20px;
     color: #fac51c ;    
