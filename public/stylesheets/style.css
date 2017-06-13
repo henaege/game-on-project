@@ -480,6 +480,21 @@ ul {
   }
 }
 
+@media only screen and (max-width: 555px){
+    #table-lables{
+        font-size: 10px;
+    }
+    #first-player{
+        font-size: 10px;
+    }
+    #second-player{
+        font-size: 10px;
+    }
+    #table-title{
+        font-size: 12px;
+    }
+}
+
 
 
 
