@@ -327,6 +327,9 @@ select {
   color: #D75F57 ;
 
 }
+#data-table {
+  margin-bottom: 0;
+}
 
 tr{
   text-align: center;
@@ -496,5 +499,7 @@ ul {
 }
 
 
-
+.news-container{
+  height: 100vh;
+}
 

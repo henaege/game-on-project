@@ -156,12 +156,11 @@ html
 									td #{comprebounds}
 									td #{compthree_points}
 									td #{compminutes}
-					div#tweets
-						//- a.twitter-timeline(href="https://twitter.com/NBA")
-							p Tweets by NBA
-						blockquote.twitter-tweet(data-cards="hidden" data-lang="en" data-theme="dark" data-link-color="#2B7BB9")
-							a(href="#{tweets}")
-						script(async src="//platform.twitter.com/widgets.js" charset="utf-8")
+					div.container
+						div#tweets.col-xs-8.col-xs-offset-2
+							blockquote.twitter-tweet(data-cards="hidden" data-lang="en" data-theme="dark" data-link-color="#2B7BB9")
+								a(href="#{tweets}")
+							script(async src="//platform.twitter.com/widgets.js" charset="utf-8")
 
 				div.news-container.col-xs-12.col-sm-2.col-md-2
 					h3 News
