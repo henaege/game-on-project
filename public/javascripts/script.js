@@ -19,6 +19,9 @@ $(document).ready(function(){
     // if(registered){
     //     $('#accountSetting').modal('show');
     // }
+
+    $('#fav-input').val = $('#compare-search-input').val;
+
 	var nameSource = availableTags.split(",");
 	nameSource = nameSource.slice(0, -2);
     $("#search-input").focus(function(){
