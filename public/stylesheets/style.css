@@ -11,7 +11,7 @@ a {
 
 img {
   width: auto;
-  height:  100%;
+  /*height:  100%;*/
   margin-left: -15px;
 }
 h1{
@@ -19,7 +19,7 @@ h1{
   text-align: center;
   color: white;
   padding-top: 330px;
-  font-size: 80px;  
+  font-size: 8rem;  
   text-shadow: 2px 3px black;
 }
 
@@ -56,7 +56,7 @@ h1{
 h3{
     font-family: Verdana, sans-serif;
     text-align: center;
-    font-size: 25px;
+    font-size: 3rem;
     font-weight: 600;
     color: #fac51c ;
 }
@@ -80,7 +80,7 @@ h3{
 }
 
 p, h5 {
-  font-size: 18px;
+  font-size: 1.5rem;
 }
 
 .message {
@@ -100,7 +100,7 @@ p, h5 {
 
 .main-content-container {
   width: 100vw;
-  padding: 0;
+  padding: 5px;
 }
 
 .sign-up-form-container, .login-form-container {
@@ -173,9 +173,9 @@ p, h5 {
   margin-top: 100px;
 }
 
-.form-group {
+/*.form-group {
   margin: 15px;
-}
+}*/
 
 label {
   margin-right: 15px;
@@ -193,7 +193,7 @@ label {
 }
 
 .option-panel-container {
-  padding: 0;
+  padding: 1rem;
 }
 
 .nav-bar {
@@ -205,7 +205,8 @@ label {
 
 .option-panel {
   width: 100%;
-  margin: 5px;
+  /*margin: 5px;*/
+  height:100%;
   padding: 0;
 }
 
@@ -221,19 +222,19 @@ label {
 }
 
 
-.pic, .info {
+/*.pic, .info {
   width: 90%;
   height: 30%;
-}
-
+}*/
+/*.pic-container {
+  margin: 5px;
+}*/
 .pic {
   margin-top: 10px;
-  border: 1px solid white;
-  background-color: #bbbcbf;
-  width: auto;
-  height: 210px;
+  /*border: 1px solid white;*/
+  background-color: #333335;
+  max-width: 100%;
   overflow: hidden;
-
 }
 
 input {
@@ -259,8 +260,9 @@ select {
   font-size: 18px;
 }
 
-.compare-submit {
-  margin-left: 15px;
+#compare-submit {
+  margin-left: 5px;
+  margin-top: 10px;
 }
 .info{
   border: none;
@@ -280,6 +282,9 @@ select {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+#search-input {
+  width:90%;
+}
 
 #submit{
   margin-left: 8px;
@@ -287,6 +292,7 @@ select {
 
 #charts{
   margin-top: 15px;
+  height:500px;
 }
 
 
@@ -376,6 +382,7 @@ tr{
 
 ul {
   list-style-type: none;
+  padding: 0
 }
 
 #button-tag{
@@ -400,4 +407,32 @@ ul {
 
 #table-title{
     color: #E0E0E3;
+}
+
+@media (max-width: 768px){
+  .option-panel-container{
+    height: 60%;
+  }
+}
+@media (min-width: 768px){
+  .search-bar {
+  margin: 0.8rem;
+  }
+  .pic-container {
+    margin-left:0.3rem;
+  }
+  .info {
+    margin-left: 1rem;
+  }
+  .info ul{
+    padding: 0;
+  }
+  .fav-form-container{
+    margin-left: 1rem;
+  }
+
+
+  .compare-btn {
+    font-size: 2rem;
+  }
 }

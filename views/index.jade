@@ -24,27 +24,27 @@ html
 			div.first-section.container.text-center
 				div#bgndVideo.player(data-property="{videoURL:'http://youtu.be/dOZxIpy6Gm4',containment:'body',autoPlay:true, mute:true, startAt:0, stopAt:84, opacity:1, showControls:false, showYTLogo:false}")
 				div.row
-					div.col-sm-2.col-sm-offset-10.log-in-container
+					div.col-xs-2.col-xs-offset-10.col-sm-2.col-sm-offset-10.col-md-2.col-md-offset-10.log-in-container
 						button.log-in(onclick="jQuery('#bgndVideo').YTPPause()") Login
 				div.row
-					div.game-on.col-sm-2-offset-5
+					div.game-on.col-xs-2-offset-5.col-sm-2-offset-5.col-md-2-offset-5
 						h1 
 							span#game GAME 
 							span#on ON
 						
 			
 				div.row
-					div.game-on.game-on-fade.col-sm-2-offset-5
+					div.game-on.game-on-fade.col-xs-2-offset-5.col-sm-2-offset-5.col-md-2-offset-5
 						h3#experience A Data Visualization Experience
 						button#start-btn.game-on-fade(onclick="jQuery('#bgndVideo').YTPPause()") Get Started
 					div.row
-						div.game-on.game-on-fade.col-sm-2-offset-5
+						div.game-on.game-on-fade.col-xs-2-offset-5.col-sm-2-offset-5.col-md-2-offset-5
 							button.about-button(type="button"  data-toggle="modal" data-target="#about") About 
 								span#button-tag GAME ON
 							
 			div.second-section.container
 				div.row
-					div.sign-up-form-container.col-sm-4.col-sm-offset-4.text-center
+					div.sign-up-form-container.col-xs-4.col-xs-offset-4.col-sm-4.col-sm-offset-4.col-md-4.col-md-offset-4.text-center
 						form.sign-up(action="/signUp" method="post")
 							div.form-group.signupform
 								label.index-label User Name
@@ -58,7 +58,7 @@ html
 							div.form-group
 								label.index-label  
 							button.save-btn(type='submit') Submit
-					div.login-form-container.col-sm-4.col-sm-offset-4.text-center
+					div.login-form-container.col-xs-4.col-xs-offset-4.col-sm-4.col-sm-offset-4.col-md-4.col-md-offset-4.text-center
 						form.login(action='/login' method="post")
 							div.form-group.login-form
 								label.index-label Email
@@ -78,7 +78,7 @@ html
 							h4.modal-title#gridSystemModalLabel About
 						div.modal-body
 							div.row
-								div.col-sm-10.col-sm-offset-1
+								div.col-xs-10.col-xs-offset-1.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1
 									p Game On is a full stack web app used to visualize sports data. It allows users to visualize player and team stats like never before and perform analyses that have previously been difficult to render. Users can log in with a user name and password, save favorite players, and build visualization charts from player data. Users also get an automatically-updated news feed for timely inspiration of players to compare stats on.
 											
 						div.modal-footer
