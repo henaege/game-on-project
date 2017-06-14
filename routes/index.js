@@ -4,7 +4,6 @@ var mysql = require('mysql');
 var btoa = require('btoa');
 var bcrypt = require('bcrypt-nodejs');
 var serverInfo = require('../config/config');
-var twitterList = require('../config/nbatwitter')
 var array = [];
 var request = require('request');
 var newsApiKey = serverInfo.newApiKey;
