@@ -102,7 +102,8 @@ router.get('/user', (req, res)=>{
       var params = {
         screen_name: screen_name,
         result_type: 'recent',
-        lang: 'en'
+        lang: 'en',
+        include_rts: "false",
       }
 
       T.get('statuses/user_timeline', params, function(err, data, response){
@@ -316,7 +317,8 @@ router.post('/user', (req, res)=>{
       var params = {
         screen_name: screen_name,
         result_type: 'recent',
-        lang: 'en'
+        lang: 'en',
+        include_rts: "false",
       }
 
       T.get('statuses/user_timeline', params, function(err, data, response){
