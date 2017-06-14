@@ -217,7 +217,8 @@ router.get('/user', (req, res)=>{
                 compminutes: compminutes,
                 compthree_points: compthree_points,
                 compName: compName,
-                tweets: tweet
+                tweets: tweet,
+                twitterName: screen_name
               });
               });
             });
@@ -415,7 +416,8 @@ router.post('/user', (req, res)=>{
                 compthree_points: compthree_points,
                 compName: compName,
                 userFaves: userFaves,
-                tweets: tweet
+                tweets: tweet,
+                twitterName: screen_name
             });
             });
           });

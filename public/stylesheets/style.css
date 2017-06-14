@@ -467,6 +467,9 @@ ul {
   .option-panel-container{
     height: 95%;
   }
+  #tweets{
+    display: none;
+  }
 }
 @media (min-width: 768px){
   .search-bar {
