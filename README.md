@@ -306,7 +306,7 @@ Later on, we implemented further filters that would check if a name the user typ
 
 ## Bonus!!
 
-The current player's latest tweet is shown just under the stats table in the chart section. In addition, a Twittier follow button beneath the player's photo allows the user to follow that player on Twitter!
+The current player's latest tweet is shown just under the stats table in the chart section. In addition, a Twitter follow button beneath the player's photo allows the user to follow that player on Twitter!
 <p align='center'>
     <img src="./public/images/bonus.png" /></img>
 </p>
