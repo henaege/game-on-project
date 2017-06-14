@@ -303,4 +303,12 @@ Later on, we implemented further filters that would check if a name the user typ
 <p align='center'>
     <img src="./public/images/search2.png" /></img>
 </p>
+
+## Bonus!!
+
+The current player's latest tweet is shown just under the stats table in the chart section. In addition, a Twittier follow button beneath the player's photo allows the user to follow that player on Twitter!
+<p align='center'>
+    <img src="./public/images/bonus.png" /></img>
+</p>
+
 # Game On
