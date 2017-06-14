@@ -4,17 +4,46 @@ var mysql = require('mysql');
 var btoa = require('btoa');
 var bcrypt = require('bcrypt-nodejs');
 var serverInfo = require('../config/config');
+var twitterList = require('../config/nbatwitter')
 var array = [];
 var request = require('request');
 var newsApiKey = serverInfo.newApiKey;
 var Twitter = require('twitter');
 
 
+
 // =====Go to HOME page ====
 router.get('/', function(req, res, next) {
     res.render('index', {sessionInfo: req.session});
 });
-
+// ============= Creating database of username for player's twitter account ==========
+// router.get('/', function(req, res, next) {
+//       var fullNameQuery = "SELECT CONCAT(player_info.first_name, ' ', player_info.last_name) AS player_full_name, id FROM player_info;";
+//       var array = []
+//       connection.query(fullNameQuery, (err, results)=>{
+//         if(err) throw err;
+//         array = results;
+//         for(let i = 0; i < twitterList.length; i++){
+//           var twitterName = twitterList[i].Twitter;
+//           var playerNameFromTwitterList = twitterList[i].Player;
+//           playerNameFromTwitterList = playerNameFromTwitterList.split('\\');
+//           playerNameFromTwitterList = playerNameFromTwitterList[0];
+//           // console.log(playerNameFromTwitterList)
+//           for(let j = 0; j < array.length; j++){
+//             console.log(playerNameFromTwitterList);
+//             if(playerNameFromTwitterList == array[j].player_full_name){
+//                 var insertQuery = `UPDATE player_info SET twitter_name = '${twitterName}' WHERE id = ${array[j].id}`;
+//                 connection.query(insertQuery, (err, results)=>{
+//                   if (err) throw err;
+//                   // res.render('index');
+//                 });
+//                 break;
+//             }
+//           }
+//         }
+//       });
+                        
+// });
 // ===  Connec to local database ====
 var connection = mysql.createConnection({
     host: serverInfo.host,
@@ -28,8 +57,9 @@ connection.connect();
 router.get('/user', (req, res)=>{
 
   // === Condition for deciding which player stats to load ===
-    var playerTwitterName = ['KingJames', 'carmeloanthony', 'StephenCurry30'];
+  var screen_name;
     if (req.session.currentPlayer != undefined){
+      screen_name = req.session.currentTwitter;
       randomGoodPlayer = req.session.currentPlayer;
     } else if (req.session.fav_player != undefined) {
         bestPlayerIds = req.session.favPlayer;
@@ -42,7 +72,7 @@ router.get('/user', (req, res)=>{
 
   var news = [];
   var averagePlayerId = 519;
-    var selectQuery = `SELECT photo, team, position, first_name, last_name FROM player_info WHERE (id = ${randomGoodPlayer}) OR (id = ${averagePlayerId});`;
+    var selectQuery = `SELECT photo, team, position, first_name, last_name, twitter_name FROM player_info WHERE (id = ${randomGoodPlayer}) OR (id = ${averagePlayerId});`;
     connection.query(selectQuery, (error, results)=>{
       if(error) throw error;
       var photoUrl = results[0].photo;
@@ -50,6 +80,7 @@ router.get('/user', (req, res)=>{
       var position = results[0].position;
       var firstName = results[0].first_name;
       var lastName = results[0].last_name;
+      screen_name = results[0].twitter_name;
       var fullName = firstName + ' ' + lastName;
       var compName = results[1].first_name + ' ' + results[1].last_name;
 
@@ -69,8 +100,7 @@ router.get('/user', (req, res)=>{
       var tweet;
       var T = new Twitter(serverInfo);
       var params = {
-        screen_name: 'NBA',
-        count: 10,
+        screen_name: screen_name,
         result_type: 'recent',
         lang: 'en'
       }
@@ -86,6 +116,7 @@ router.get('/user', (req, res)=>{
               theme:"dark",
               link_color:"#2B7BB9",
               hide_media:"true",
+              include_rts: "false",
             }
             T.get('statuses/oembed', options, function(err, data, response){
                 if(!err){ 
@@ -228,12 +259,14 @@ router.post('/add_fav', (req,res)=>{
     var fullName = req.params.val;
     console.log(fullName);
     var nameArray = fullName.split(' ');
-    var idQuery = `SELECT id FROM player_info WHERE (first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}');`; 
+    var idQuery = `SELECT id, twitter_name FROM player_info WHERE (first_name = '${nameArray[0]}' AND last_name = '${nameArray[1]}');`; 
     connection.query(idQuery, (error, results)=>{
       if(error) throw error;
       console.log(results);
       var idToLoad = results[0].id;
+      var twitterToLoad = results[0].twitter_name;
       req.session.currentPlayer = idToLoad;
+      req.session.currentTwitter = twitterToLoad;
       res.redirect('/user?msg=loadFav');
     });
   });
@@ -246,7 +279,6 @@ router.post('/user', (req, res)=>{
   var nameArray = req.body.search.split(' ');
   var compName = req.body.compare;
   var compNameArray = req.body.compare.split(' ');
-  req.session.registered = false;
   var compareId;
   var playerId;
   var news = [];
@@ -266,13 +298,46 @@ router.post('/user', (req, res)=>{
       compareId = results[1].id;
 
       // console.log(typeof(playerId));
-      var selectQuery = `SELECT photo, team, position FROM player_info WHERE id = '${playerId}';`;
+      var selectQuery = `SELECT photo, team, position, twitter_name FROM player_info WHERE id = '${playerId}';`;
 
         connection.query(selectQuery, (error, results)=>{
           if(error) throw error;
           var photoUrl = results[0].photo;
           var teamName = results[0].team;
           var position = results[0].position;
+          var screen_name = results[0].twitter_name;
+          console.log(screen_name);
+          // === Setting up Twitter ===
+
+      
+      var tweet;
+      var T = new Twitter(serverInfo);
+      var params = {
+        screen_name: screen_name,
+        result_type: 'recent',
+        lang: 'en'
+      }
+
+      T.get('statuses/user_timeline', params, function(err, data, response){
+        if(!err){
+          // res.json(data);
+            tweetUrl = `https://twitter.com/NBA/status/${data[0].id_str}`;
+            // console.log(tweet);
+            var options = {
+              url: tweetUrl,
+              lang:"en",
+              theme:"dark",
+              link_color:"#2B7BB9",
+              hide_media:"true",
+              include_rts: "false",
+            }
+            T.get('statuses/oembed', options, function(err, data, response){
+                if(!err){ 
+                  console.log(data.url);
+                   tweet = data.url;
+                }else{
+                  console.log(err);
+                }
           
           var rankQuery = `SELECT PPGrank, ASSrank, STLrank, REBrank, MINrank, THREErank, total_points, assists, steals, rebounds, minutes, three_points FROM per_game WHERE (id = '${playerId}') OR (id = '${compareId}');`;
 
@@ -349,10 +414,16 @@ router.post('/user', (req, res)=>{
                 compminutes: compminutes,
                 compthree_points: compthree_points,
                 compName: compName,
-                userFaves: userFaves
+                userFaves: userFaves,
+                tweets: tweet
             });
             });
           });
+          });
+        }else{
+          console.log(err);
+        }
+        });
         });
       });
     });

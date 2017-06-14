@@ -3,8 +3,15 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #333335 ;
+  background: linear-gradient(black, #333335);
 }
-
+::-webkit-scrollbar {
+    width: 0;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
 a {
   color: #00B7FF ;
 }
@@ -503,3 +510,8 @@ ul {
   height: 100vh;
 }
 
+.tweet-container {
+  display: flex;
+  justify-content: center;
+  width: 100%
+}
