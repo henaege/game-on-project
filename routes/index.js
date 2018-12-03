@@ -1,4 +1,4 @@
- var express = require('express');
+var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var btoa = require('btoa');
@@ -8,7 +8,6 @@ var array = [];
 var request = require('request');
 var newsApiKey = serverInfo.newApiKey;
 var Twitter = require('twitter');
-
 
 
 // =====Go to HOME page ====
@@ -44,14 +43,46 @@ router.get('/', function(req, res, next) {
                         
 // });
 // ===  Connec to local database ====
-var connection = mysql.createConnection({
-    host: serverInfo.host,
-    user: serverInfo.username,
-    password: serverInfo.password,
-    database: serverInfo.database
-});
-connection.connect();
 
+// var db_config = mysql.createConnection({
+//    host: 'localhost',
+//    user: 'x',
+//    password: 'x',
+//    database: 'game_on',
+//	port: 3306
+//});
+
+// var connection;
+
+// function handleDisconnect() {
+	var connection = mysql.createConnection({
+    debug: true,
+    host: 'localhost',
+    user: 'x',
+    password: 'x',
+    database: 'game_on',
+        port: 3306
+}) // Recreate the connection, since
+                                                  // the old one cannot be reused.
+connection.connect()
+//  connection.connect(function(err) {              // The server is either down
+//    if(err) {                                     // or restarting (takes a while sometimes).
+//      console.log('error when connecting to db:', err);
+//      setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+//    }                                     // to avoid a hot loop, and to allow our node script to
+//  });                                     // process asynchronous requests in the meantime.
+                                          // If you're also serving http, display a 503 error.
+//  connection.on('error', function(err) {
+//    console.log('db error', err);
+//    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+//      handleDisconnect();                         // lost due to either server restart, or a
+//    } else {                                      // connnection idle timeout (the wait_timeout
+  //    throw err;                                  // server variable configures this)
+//    }
+//  });
+//}
+
+//handleDisconnect();
 // === Get request for USER page =====
 router.get('/user', (req, res)=>{
 
